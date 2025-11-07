@@ -1,12 +1,12 @@
 <template>
-  <a-layout class="layout" :has-sider="true">
+  <t-layout class="layout">
     <Aside v-if="isPc" />
-    <a-layout class="layout-right">
+    <t-layout class="layout-right">
       <Header />
       <Main />
       <Footer v-if="isFooter" />
-    </a-layout>
-  </a-layout>
+    </t-layout>
+  </t-layout>
 </template>
 
 <script setup lang="ts">
@@ -29,9 +29,8 @@ const { isPc } = useDevicesSize();
 <style lang="scss" scoped>
 .layout {
   height: 100vh;
-}
-.layout-right {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  .layout-right {
+    min-width: 0;
+  }
 }
 </style>

@@ -28,5 +28,37 @@ declare module "vue" {
     SSvgAndIcon: (typeof import("./components/s-svg-and-icon/index.vue"))["default"];
     SSvgIcon: (typeof import("./components/s-svg-icon/index.vue"))["default"];
     SVerifyCode: (typeof import("./components/s-verify-code/index.vue"))["default"];
+    TAside: (typeof import("tdesign-vue-next"))["Aside"];
+    TBadge: (typeof import("tdesign-vue-next"))["Badge"];
+    TBreadcrumb: (typeof import("tdesign-vue-next"))["Breadcrumb"];
+    TBreadcrumbItem: (typeof import("tdesign-vue-next"))["BreadcrumbItem"];
+    TButton: (typeof import("tdesign-vue-next"))["Button"];
+    TCheckbox: (typeof import("tdesign-vue-next"))["Checkbox"];
+    TColorPicker: (typeof import("tdesign-vue-next"))["ColorPicker"];
+    TContent: (typeof import("tdesign-vue-next"))["Content"];
+    TDivider: (typeof import("tdesign-vue-next"))["Divider"];
+    TDrawer: (typeof import("tdesign-vue-next"))["Drawer"];
+    TDropdown: (typeof import("tdesign-vue-next"))["Dropdown"];
+    TDropdownItem: (typeof import("tdesign-vue-next"))["DropdownItem"];
+    TEmpty: (typeof import("tdesign-vue-next"))["Empty"];
+    TFooter: (typeof import("tdesign-vue-next"))["Footer"];
+    TForm: (typeof import("tdesign-vue-next"))["Form"];
+    TFormItem: (typeof import("tdesign-vue-next"))["FormItem"];
+    THeader: (typeof import("tdesign-vue-next"))["Header"];
+    TImage: (typeof import("tdesign-vue-next"))["Image"];
+    TInput: (typeof import("tdesign-vue-next"))["Input"];
+    TLayout: (typeof import("tdesign-vue-next"))["Layout"];
+    TMenu: (typeof import("tdesign-vue-next"))["Menu"];
+    TMenuItem: (typeof import("tdesign-vue-next"))["MenuItem"];
+    TOption: (typeof import("tdesign-vue-next"))["Option"];
+    TPopup: (typeof import("tdesign-vue-next"))["Popup"];
+    TSelect: (typeof import("tdesign-vue-next"))["Select"];
+    TSlider: (typeof import("tdesign-vue-next"))["Slider"];
+    TSpace: (typeof import("tdesign-vue-next"))["Space"];
+    TSubmenu: (typeof import("tdesign-vue-next"))["Submenu"];
+    TSwitch: (typeof import("tdesign-vue-next"))["Switch"];
+    TTabPanel: (typeof import("tdesign-vue-next"))["TabPanel"];
+    TTabs: (typeof import("tdesign-vue-next"))["Tabs"];
+    TTooltip: (typeof import("tdesign-vue-next"))["Tooltip"];
   }
 }

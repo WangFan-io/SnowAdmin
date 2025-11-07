@@ -34,6 +34,7 @@ module.exports = {
     "scss/at-import-partial-extension": null, // 解决不能使用 @import 引入 scss 文件
     "property-no-unknown": null, // 禁止未知的属性
     "no-empty-source": null, // 禁止空源码
+    "custom-property-pattern": null, // 自定义属性名称的格式
     "selector-class-pattern": null, // 强制选择器类名的格式
     "value-no-vendor-prefix": null, // 关闭 vendor-prefix (为了解决多行省略 -webkit-box)
     "no-descending-specificity": null, // 不允许较低特异性的选择器出现在覆盖较高特异性的选择器

@@ -21,6 +21,12 @@ import i18n from "@/lang/index";
 import "@/assets/fonts/fonts.scss";
 // 引入自定义指令
 import directives from "@/directives/index";
+// 引入TD
+import TDesign from "tdesign-vue-next";
+// 引入组件库的少量全局样式变量
+import "tdesign-vue-next/es/style/index.css";
+// 引入TD主题
+import "@/style/var/theme.css";
 
 // vchart黑暗模式
 // https://arco.design/react/docs/vchart
@@ -35,6 +41,7 @@ const app = createApp(App);
 app.use(ArcoVue, {
   componentPrefix: "arco"
 });
+app.use(TDesign);
 app.use(pinia);
 app.use(ArcoVueIcon);
 app.use(router);

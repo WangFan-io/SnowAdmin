@@ -1,22 +1,22 @@
 <template>
-  <a-drawer :width="340" :visible="props.themeOpen" @ok="handleCancel" @cancel="handleCancel" unmount-on-close>
-    <template #title> 主题设置 </template>
+  <t-drawer size="340px" v-model:visible="themeOpen" @confirm="handleCancel" @cancel="handleCancel">
+    <template #header>{{ $t(`system.theme-settings`) }}</template>
     <div>
       <div>
-        <a-divider orientation="center">导航模式</a-divider>
+        <t-divider>{{ $t(`system.navigate mode`) }}</t-divider>
         <div class="flex-center">
           <a-tooltip v-for="item in layoutList" :key="item.value" :content="item.label" position="top" mini>
             <div
               :class="layoutType === item.value ? `current-layout ${item.class}` : item.class"
               @click="layouetChange(item.value)"
             >
-              <icon-check-circle-fill class="layout-icon" />
+              <icon size="14px" name="check-circle" class="layout-icon" />
             </div>
           </a-tooltip>
         </div>
       </div>
       <div class="box-gap">
-        <a-divider orientation="center">主题设置</a-divider>
+        <t-divider>{{ $t(`system.theme-settings`) }}</t-divider>
         <div class="flex-center">
           <ColorPicker
             :theme="darkMode ? 'dark' : 'light'"
@@ -29,29 +29,30 @@
       </div>
       <div class="box-gap">
         <div class="flex-row">
-          <div>色弱模式</div>
-          <a-switch v-model="colorWeakMode" @change="onColorWeak" />
+          <div>{{ $t(`system.color weakness mode`) }}</div>
+          <t-switch v-model="colorWeakMode" @change="onColorWeak" />
         </div>
         <div class="flex-row">
-          <div>灰色模式</div>
-          <a-switch v-model="grayMode" @change="onGray" />
+          <div>{{ $t(`system.grey mode`) }}</div>
+          <t-switch v-model="grayMode" @change="onGray" />
         </div>
         <div class="flex-row">
-          <div>侧边栏深色</div>
-          <a-switch :disabled="darkMode" v-model="asideDark" />
+          <div>{{ $t(`system.sidebar is dark`) }}</div>
+          <t-switch :disabled="darkMode" v-model="asideDark" />
         </div>
         <div class="flex-row">
-          <div>页面过渡</div>
-          <a-select v-model="transitionPage" :style="{ width: '120px' }" placeholder="请选择">
-            <a-option v-for="item in transitions" :key="item.value" :value="item.value" :label="item.label" />
-          </a-select>
+          <div>{{ $t(`system.page transition`) }}</div>
+          <t-select v-model="transitionPage" :style="{ width: '120px' }" placeholder="请选择" clearable>
+            <t-option v-for="item in transitions" :key="item.value" :value="item.value" :label="item.label"></t-option>
+          </t-select>
         </div>
       </div>
     </div>
-  </a-drawer>
+  </t-drawer>
 </template>
 
 <script setup lang="ts">
+import { Icon } from "tdesign-icons-vue-next";
 import { storeToRefs } from "pinia";
 import { useThemeConfig } from "@/store/modules/theme-config";
 import { useThemeMethods } from "@/hooks/useThemeMethods";
@@ -62,6 +63,8 @@ import "vue-color-kit/dist/vue-color-kit.css";
 const themeStore = useThemeConfig();
 const { layoutType, collapsed, colorWeakMode, grayMode, darkMode, asideDark, transitionPage, themeColor, presetColors } =
   storeToRefs(themeStore);
+
+const themeOpen = defineModel<boolean>("themeOpen");
 
 const layoutList = reactive({
   layoutDefaults: {
@@ -125,13 +128,6 @@ const layouetChange = (type: string) => {
   const { isPc } = useDevicesSize();
   collapsed.value = isPc.value ? false : true;
 };
-
-const props = defineProps({
-  themeOpen: {
-    type: Boolean,
-    default: false
-  }
-});
 
 const emits = defineEmits(["themeCancel"]);
 const handleCancel = () => {
@@ -231,7 +227,7 @@ const handleCancel = () => {
     background: #232324;
   }
 }
-:deep(.arco-divider-text) {
-  background: $color-bg-3;
+:deep(.t-divider) {
+  margin: 10px 0;
 }
 </style>

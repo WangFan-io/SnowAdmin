@@ -1,13 +1,10 @@
 <template>
-  <div class="menu_fold">
-    <a-button size="mini" type="text" class="menu_fold_icon" id="system-collapsed" @click="onCollapsed">
-      <template #icon>
-        <icon-menu-fold :size="18" v-if="!collapsed" />
-        <icon-menu-unfold :size="18" v-if="collapsed" />
-      </template>
-    </a-button>
-  </div>
-
+  <t-button size="small" shape="square" variant="text" id="system-collapsed" @click="onCollapsed">
+    <template #icon>
+      <icon :size="iconSize" name="indent-left" v-if="!collapsed" />
+      <icon :size="iconSize" name="indent-right" v-else />
+    </template>
+  </t-button>
   <DrawerAside v-if="!isPc" />
 </template>
 
@@ -16,9 +13,15 @@ import DrawerAside from "@/layout/components/drawer-aside/index.vue";
 import { storeToRefs } from "pinia";
 import { useThemeConfig } from "@/store/modules/theme-config";
 import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { Icon } from "tdesign-icons-vue-next";
+
 const themeStore = useThemeConfig();
 const { collapsed } = storeToRefs(themeStore);
 const { isPc } = useDevicesSize();
+
+// 图标尺寸
+const iconSize = ref("18px");
+
 // 刷新时，PC窗口展开菜单，移动端收起菜单
 collapsed.value = isPc.value ? false : true;
 
@@ -32,17 +35,3 @@ watch(isPc, (newV: boolean) => {
   collapsed.value = newV ? false : true;
 });
 </script>
-
-<style lang="scss" scoped>
-.menu_fold {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 32px;
-  height: 32px;
-  .menu_fold_icon {
-    color: $color-text-1;
-    border-radius: $radius-box-1;
-  }
-}
-</style>

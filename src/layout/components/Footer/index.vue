@@ -1,7 +1,10 @@
 <template>
-  <a-layout-footer class="footer">
+  <!-- <a-layout-footer class="footer">
     <div class="footer_title" @click="onFooter">2024 © SnowAdmin by 兔子先森</div>
-  </a-layout-footer>
+  </a-layout-footer> -->
+  <t-footer class="footer">
+    <div class="footer_title" @click="onFooter">2024 © SnowAdmin by 兔子先森</div>
+  </t-footer>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +19,8 @@ const onFooter = () => {
   display: flex;
   align-items: center;
   height: 30px;
+  padding: 0;
+  background-color: white;
   border-top: $border-1 solid $color-border-2;
 }
 .footer_title {

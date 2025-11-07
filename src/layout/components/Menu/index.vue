@@ -1,28 +1,26 @@
 <template>
-  <a-menu
-    :breakpoint="layoutType != 'layoutHead' ? 'xl' : undefined"
-    :mode="'vertical'"
+  <t-menu
+    width="220px"
+    :expandMutex="isAccordion"
     :theme="asideDark ? 'dark' : 'light'"
     :collapsed="collapsed"
-    :auto-scroll-into-view="true"
-    :auto-open-selected="true"
-    :accordion="isAccordion"
-    :selected-keys="[selectedMenu]"
-    @menu-item-click="onMenuItem"
+    :value="selectedMenu"
+    @change="onMenuItem"
   >
     <MenuItem :route-tree="props.routeTree" />
-  </a-menu>
+  </t-menu>
 </template>
 
 <script setup lang="ts">
 import MenuItem from "@/layout/components/Menu/menu-item.vue";
-import { useRoutingMethod } from "@/hooks/useRoutingMethod";
+import { MenuProps } from "tdesign-vue-next";
 import { storeToRefs } from "pinia";
 import { useThemeConfig } from "@/store/modules/theme-config";
+import { useRoutingMethod } from "@/hooks/useRoutingMethod";
 const route = useRoute();
 const router = useRouter();
 const themeStore = useThemeConfig();
-const { collapsed, isAccordion, layoutType, asideDark } = storeToRefs(themeStore);
+const { collapsed, isAccordion, asideDark } = storeToRefs(themeStore);
 
 interface Props {
   routeTree: Menu.MenuOptions[];
@@ -33,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   routeTree: () => []
 });
 
-const onMenuItem = (path: string) => router.push(path);
+const onMenuItem: MenuProps["onChange"] = path => router.push(path);
 
 const selectedMenu = computed(() => {
   const { getAllParentRoute } = useRoutingMethod();
@@ -50,4 +48,11 @@ const selectedMenu = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.t-default-menu__inner .t-menu) {
+  padding: 4px var(--td-comp-paddingLR-s);
+}
+:deep(.t-menu__item) {
+  height: var(--td-size-12);
+}
+</style>

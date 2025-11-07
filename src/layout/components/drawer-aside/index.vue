@@ -1,21 +1,24 @@
 <template>
-  <a-drawer
-    :width="220"
-    class="drawer-aside"
-    placement="left"
-    :header="false"
+  <t-drawer
+    size="220px"
+    :closeBtn="false"
+    :closeOnEscKeydown="false"
+    closeOnOverlayClick
     :footer="false"
-    :visible="!collapsed"
-    @cancel="handleCancel"
-    unmount-on-close
+    :header="false"
+    :preventScrollThrough="true"
+    showOverlay
+    sizeDraggable
+    placement="left"
+    v-model:visible="isDrawerVisible"
   >
     <div :class="asideDark ? 'aside dark' : 'aside'">
       <Logo />
-      <a-layout-sider class="layout_side" :width="220">
-        <a-scrollbar style="height: 100%; overflow: auto" outer-class="scrollbar"><Menu :route-tree="routeTree" /></a-scrollbar>
-      </a-layout-sider>
+      <div class="aside-menu">
+        <Menu :route-tree="routeTree" />
+      </div>
     </div>
-  </a-drawer>
+  </t-drawer>
 </template>
 
 <script setup lang="ts">
@@ -29,70 +32,32 @@ const { collapsed, asideDark } = storeToRefs(themeStore);
 const routerStore = useRouteConfigStore();
 const { routeTree } = storeToRefs(routerStore);
 
-const handleCancel = () => {
-  collapsed.value = true;
-};
+// 创建计算属性来反转 collapsed 的值
+const isDrawerVisible = computed({
+  get: () => !collapsed.value,
+  set: value => {
+    collapsed.value = !value;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .aside {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  .aside-menu {
+    flex: 1;
+    overflow: hidden auto;
+  }
 }
 .dark {
   background: #232324;
 }
-.layout_side {
-  flex: 1;
-  overflow: hidden;
-  .scrollbar {
-    height: 100%;
-  }
-}
-
-// 修改左侧滚动条宽度
-:deep(.arco-scrollbar-thumb-direction-vertical .arco-scrollbar-thumb-bar) {
-  width: 4px;
-  margin-left: 8px;
-}
-
-// 去掉右侧阴影并替换为边线
-:deep(.arco-layout-sider-light) {
-  border-right: $border-1 solid $color-border-2;
-  box-shadow: unset;
-}
-
-// 解决折叠菜单的icon不居中问题
-:deep(.arco-menu-vertical.arco-menu-collapsed) {
-  // 消除icon的自带padding值，并且让元素居中
-  .arco-menu-has-icon {
-    justify-content: center;
-    padding: 0;
-  }
-
-  // 消除icon的自带margin-right值，并且设置icon的padding值以保留icon空隙
-  .arco-menu-icon {
-    padding: 10px 0;
-    margin-right: 0;
-  }
-
-  // 消除title占位
-  .arco-menu-title {
-    display: none;
-  }
-}
-
-// 去掉sider背景
-.arco-layout-sider {
-  background: unset;
-}
 </style>
 <style lang="scss">
-.drawer-aside {
-  .arco-drawer .arco-drawer-body {
-    padding: 0;
-    overflow: hidden;
-  }
+.t-drawer__body {
+  padding: 0;
 }
 </style>

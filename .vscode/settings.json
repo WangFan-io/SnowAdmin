@@ -37,7 +37,7 @@
   "[less]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "i18n-ally.localesPaths": [
-    "src/lang"
-  ]
+  "i18n-ally.localesPaths": ["src/lang/modules"],
+  "i18n-ally.enabledParsers": ["ts", "json"],
+  "i18n-ally.keystyle": "nested"
 }

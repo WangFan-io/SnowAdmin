@@ -137,4 +137,9 @@ const makeCode = (e: any, n: any) => {
 /*切换验证码end*/
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.s-canvas {
+  display: flex;
+  align-items: center;
+}
+</style>

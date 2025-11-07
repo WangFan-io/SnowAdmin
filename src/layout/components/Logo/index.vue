@@ -43,7 +43,7 @@ const isTitle = computed(() => {
   align-items: center;
   justify-content: space-around;
   height: 60px;
-  border-right: $border-1 solid $color-border-2;
+  background: white;
   .logo_box {
     display: flex;
     column-gap: $padding;

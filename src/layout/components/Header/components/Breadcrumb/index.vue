@@ -1,13 +1,15 @@
 <template>
   <div id="system-breadcrumb" class="breadcrumb" v-if="!isMobile && isBreadcrumb">
-    <a-space direction="vertical">
-      <a-breadcrumb>
-        <a-breadcrumb-item v-for="(item, index) in breadcrumb" :key="item.path" :class="transition">
-          <span v-if="index === breadcrumb.length - 1" class="main_button">{{ $t(`menu.${item?.meta?.title || ""}`) }}</span>
-          <span v-else class="route_button" @click="onBreadcrumb(item)">{{ $t(`menu.${item?.meta?.title || ""}`) }}</span>
-        </a-breadcrumb-item>
-      </a-breadcrumb>
-    </a-space>
+    <t-breadcrumb>
+      <template #default>
+        <t-breadcrumb-item v-for="item in breadcrumb" :key="item.path" :class="transition" @click="onBreadcrumb(item)">
+          {{ $t(`menu.${item?.meta?.title || ""}`) }}
+        </t-breadcrumb-item>
+      </template>
+      <template #separator>
+        <icon name="chevron-right-s" />
+      </template>
+    </t-breadcrumb>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import { useRouteConfigStore } from "@/store/modules/route-config";
 import { useDevicesSize } from "@/hooks/useDevicesSize";
 import { findPathOfParentNode } from "@/utils/tree-tools";
 import { HOME_PATH } from "@/config/index";
+import { Icon } from "tdesign-icons-vue-next";
 const themeStore = useThemeConfig();
 const { isBreadcrumb, transitionPage } = storeToRefs(themeStore);
 const routeConfigStore = useRouteConfigStore();
@@ -63,19 +66,5 @@ const onBreadcrumb = (route: any) => {
 <style lang="scss" scoped>
 .breadcrumb {
   margin-left: $margin;
-  overflow: auto;
-  .main_button {
-    color: $color-text-1;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-  .route_button {
-    color: $color-text-2;
-    white-space: nowrap;
-    cursor: pointer;
-    &:hover {
-      color: $color-primary;
-    }
-  }
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <a-watermark :content="watermark" v-bind="watermarkConfig">
+  <!-- <a-watermark :content="watermark" v-bind="watermarkConfig">
     <a-layout-content class="layout-main-content">
-      <Tabs v-if="isTabs" />
       <router-view v-slot="{ Component, route }">
         <s-main-transition>
           <keep-alive :include="cacheRoutes">
@@ -10,11 +9,20 @@
         </s-main-transition>
       </router-view>
     </a-layout-content>
-  </a-watermark>
+  </a-watermark> -->
+  <t-content class="layout-main-content">
+    <router-view v-slot="{ Component, route }">
+      <s-main-transition>
+        <keep-alive :include="cacheRoutes">
+          <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" v-if="refreshPage" />
+        </keep-alive>
+      </s-main-transition>
+    </router-view>
+  </t-content>
 </template>
 
 <script setup lang="ts">
-import Tabs from "@/layout/components/Tabs/index.vue";
+// import Tabs from "@/layout/components/Tabs/index.vue";
 import { storeToRefs } from "pinia";
 import { useThemeConfig } from "@/store/modules/theme-config";
 import { useRouteConfigStore } from "@/store/modules/route-config";
@@ -52,14 +60,8 @@ watch(watermarkConfig, newv => {
 
 <style lang="scss" scoped>
 .layout-main-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-// 修改左侧滚动条宽度-主要针对main窗口内的滚动条
-:deep(.arco-scrollbar-thumb-direction-vertical .arco-scrollbar-thumb-bar) {
-  width: 4px;
-  margin-left: 8px;
+  height: 0;
+  overflow: hidden auto;
+  background: $color-fill-1;
 }
 </style>

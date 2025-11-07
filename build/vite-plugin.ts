@@ -1,13 +1,14 @@
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "path";
-import { PluginOption } from "vite";
-import { vitePluginForArco } from "@arco-plugins/vite-vue";
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import AutoImport from "unplugin-auto-import/vite";
-import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
-import { viteMockServe } from "vite-plugin-mock";
 import eslintPlugin from "vite-plugin-eslint";
+import { resolve } from "path";
+import { viteMockServe } from "vite-plugin-mock";
+import { PluginOption } from "vite";
+import { ArcoResolver } from "unplugin-vue-components/resolvers";
+import { vitePluginForArco } from "@arco-plugins/vite-vue";
+import { TDesignResolver } from "unplugin-vue-components/resolvers";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 /**
  * 创建 vite 插件
  * @param viteEnv
@@ -32,7 +33,12 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       // 自动导入的目录-自定义全局函数
       dirs: ["src/globals"],
       // arco组件的按需加载
-      resolvers: [ArcoResolver()],
+      resolvers: [
+        ArcoResolver(),
+        TDesignResolver({
+          library: "vue-next"
+        })
+      ],
       // 解决eslint报错问题
       eslintrc: {
         // 这里先设置成true然后npm run dev 运行之后会生成 .eslintrc-auto-import.json 文件之后，在改为false
@@ -48,6 +54,9 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
         // arco组件的按需加载
         ArcoResolver({
           sideEffect: true
+        }),
+        TDesignResolver({
+          library: "vue-next"
         })
       ],
       // 自动加载组件的目录配置,默认的为 'src/components'

@@ -1,34 +1,34 @@
 <template>
-  <a-drawer :width="340" :visible="props.systemOpen" @ok="handleCancel" @cancel="handleCancel" unmount-on-close>
-    <template #title> 系统设置 </template>
+  <t-drawer size="340px" v-model:visible="systemOpen" @confirm="handleCancel" @cancel="handleCancel">
+    <template #header>{{ $t(`system.system-settings`) }}</template>
     <div>
       <div>
-        <div class="title">界面设置</div>
+        <div class="title">{{ $t(`system.interface settings`) }}</div>
         <div class="flex-row">
-          <div>菜单折叠</div>
-          <a-switch v-model="collapsed" />
+          <div>{{ $t(`system.menu folding`) }}</div>
+          <t-switch v-model="collapsed" />
         </div>
         <div class="flex-row">
-          <div>菜单手风琴</div>
-          <a-switch v-model="isAccordion" />
+          <div>{{ $t(`system.menu accordion`) }}</div>
+          <t-switch v-model="isAccordion" />
         </div>
         <div class="flex-row">
-          <div>面包屑</div>
-          <a-switch v-model="isBreadcrumb" />
+          <div>{{ $t(`system.breadcrumb`) }}</div>
+          <t-switch v-model="isBreadcrumb" />
         </div>
         <div class="flex-row">
-          <div>标签栏</div>
-          <a-switch v-model="isTabs" @change="tabsChange" />
+          <div>{{ $t(`system.tab bar`) }}</div>
+          <t-switch v-model="isTabs" @change="tabsChange" />
         </div>
         <div class="flex-row">
-          <div>页脚</div>
-          <a-switch v-model="isFooter" />
+          <div>{{ $t(`system.page footer`) }}</div>
+          <t-switch v-model="isFooter" />
         </div>
       </div>
       <div>
-        <div class="title">水印设置</div>
+        <div class="title">{{ $t(`system.watermark settings`) }}</div>
         <div class="flex-row">
-          <div>水印颜色</div>
+          <div>{{ $t(`system.watermark color`) }}</div>
           <pick-colors
             :theme="darkMode ? 'dark' : 'light'"
             show-alpha
@@ -39,31 +39,31 @@
           />
         </div>
         <div class="flex-row">
-          <div>水印文案</div>
-          <a-input :style="{ width: '100px' }" v-model="watermark" placeholder="请输入" allow-clear />
+          <div>{{ $t(`system.watermark text`) }}</div>
+          <t-input :style="{ width: '100px' }" v-model="watermark" placeholder="请输入" allow-clear />
         </div>
         <div class="flex-row">
-          <div>水印大小</div>
-          <a-slider v-model="watermarkStyle.fontSize" :min="10" :max="50" :style="{ width: '100px' }" />
+          <div>{{ $t(`system.watermark size`) }}</div>
+          <t-slider v-model="watermarkStyle.fontSize" :min="10" :max="50" :style="{ width: '100px' }" />
         </div>
         <div class="flex-row">
-          <div>水印角度</div>
-          <a-slider v-model="watermarkRotate" :min="0" :max="360" :style="{ width: '100px' }" />
+          <div>{{ $t(`system.watermark angle`) }}</div>
+          <t-slider v-model="watermarkRotate" :min="0" :max="360" :style="{ width: '100px' }" />
         </div>
         <div class="flex-row">
-          <div>水印间隙</div>
-          <a-slider :default-value="gapInfo[0]" :min="0" :max="300" :style="{ width: '100px' }" @change="onWatermarkGap" />
+          <div>{{ $t(`system.watermark gap`) }}</div>
+          <t-slider v-model="gapInfo[0]" :min="0" :max="300" :style="{ width: '100px' }" @change="onWatermarkGap" />
         </div>
       </div>
       <div>
-        <div class="title">系统设置</div>
+        <div class="title">{{ $t(`system.system settings`) }}</div>
         <div class="flex-row">
-          <div>防调试</div>
-          <a-switch v-model="debugPrevention" />
+          <div>{{ $t(`system.anti-debugging`) }}</div>
+          <t-switch v-model="debugPrevention" />
         </div>
       </div>
     </div>
-  </a-drawer>
+  </t-drawer>
 </template>
 
 <script setup lang="ts">
@@ -90,15 +90,11 @@ const {
 } = storeToRefs(themeStore);
 const { tabsList, cacheRoutes } = storeToRefs(routerStore);
 const route = useRoute();
-const props = defineProps({
-  systemOpen: {
-    type: Boolean,
-    default: false
-  }
-});
+
+const systemOpen = defineModel<boolean>("systemOpen");
 
 const gapInfo = ref(watermarkGap.value);
-const onWatermarkGap = (e: number) => {
+const onWatermarkGap = (e: any) => {
   watermarkGap.value = watermarkGap.value.map(() => e);
 };
 
@@ -107,7 +103,7 @@ const onWatermarkGap = (e: number) => {
   如果关闭，那么所有tabs全部取消、所有页面缓存全部取消
   如果开启，那么添加当前路由到tabs
 */
-const tabsChange = (e: boolean) => {
+const tabsChange = (e: any) => {
   if (!e) {
     tabsList.value = [];
     cacheRoutes.value = [];
@@ -131,11 +127,7 @@ watch(
     immediate: true
   }
 );
-
-const emits = defineEmits(["systemCancel"]);
-const handleCancel = () => {
-  emits("systemCancel");
-};
+const handleCancel = () => (systemOpen.value = false);
 </script>
 
 <style lang="scss" scoped>

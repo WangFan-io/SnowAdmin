@@ -1,9 +1,9 @@
 <template>
   <div :class="asideDark ? 'aside dark' : 'aside'">
     <Logo />
-    <a-layout-sider :collapsed="collapsed" breakpoint="xl" class="layout_side" :width="220">
-      <a-scrollbar style="height: 100%; overflow: auto" outer-class="scrollbar"><Menu :route-tree="routeTree" /></a-scrollbar>
-    </a-layout-sider>
+    <t-aside class="layout_side" :width="asideWidth">
+      <Menu :route-tree="routeTree" />
+    </t-aside>
   </div>
 </template>
 
@@ -17,59 +17,23 @@ const themeStore = useThemeConfig();
 const { collapsed, asideDark } = storeToRefs(themeStore);
 const routerStore = useRouteConfigStore();
 const { routeTree } = storeToRefs(routerStore);
+
+const asideWidth = computed(() => (collapsed.value ? "64px" : "220px"));
 </script>
 
 <style lang="scss" scoped>
 .aside {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  width: v-bind(asideWidth);
+  background: white;
+  border-right: $border-1 solid $color-border-2;
+  transition: width 0.24s cubic-bezier(0.33, 0.66, 0.66, 1);
 }
 .dark {
   background: #232324;
 }
 .layout_side {
-  flex: 1;
   overflow: hidden;
-  .scrollbar {
-    height: 100%;
-  }
-}
-
-// 修改左侧滚动条宽度
-:deep(.arco-scrollbar-thumb-direction-vertical .arco-scrollbar-thumb-bar) {
-  width: 4px;
-  margin-left: 8px;
-}
-
-// 去掉右侧阴影并替换为边线
-:deep(.arco-layout-sider-light) {
-  border-right: $border-1 solid $color-border-2;
-  box-shadow: unset;
-}
-
-// 解决折叠菜单的icon不居中问题
-:deep(.arco-menu-vertical.arco-menu-collapsed) {
-  // 消除icon的自带padding值，并且让元素居中
-  .arco-menu-has-icon {
-    justify-content: center;
-    padding: 0;
-  }
-
-  // 消除icon的自带margin-right值，并且设置icon的padding值以保留icon空隙
-  .arco-menu-icon {
-    padding: 10px 0;
-    margin-right: 0;
-  }
-
-  // 消除title占位
-  .arco-menu-title {
-    display: none;
-  }
-}
-
-// 去掉sider背景
-.arco-layout-sider {
-  background: unset;
 }
 </style>

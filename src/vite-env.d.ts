@@ -24,3 +24,4 @@ declare module "pinia";
 declare module "postcss-preset-env";
 declare module "qrcode";
 declare module "vue-virtual-scroller";
+declare module "tdesign-icons-vue-next";

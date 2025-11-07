@@ -1,20 +1,22 @@
 <template>
-  <a-tabs :default-active-key="current" :active-key="current" @tab-click="onTab">
-    <a-tab-pane v-for="item in noticeData" :key="item.id">
-      <template #title>{{ `${$t(`system.${item.title}`)}(${item.data.length})` }}</template>
+  <t-tabs :default-value="current" @change="onTab">
+    <t-tab-panel v-for="item in noticeData" :key="item.id" :value="item.id">
+      <template #label>{{ `${$t(`system.${item.title}`)}(${item.data.length})` }}</template>
       <div class="notice" v-for="content in item.data" :key="content.id">
-        <a-image width="36" height="36" fit="cover" :src="myImage" class="notice_img" />
-        <div class="content margin-left-text">
+        <t-image fit="cover" :src="myImage" :style="{ width: '36px', height: '36px' }" class="notice_img" />
+        <div class="content margin-left">
           <div>
             <span class="nickname">{{ content.nickname }}</span>
-            <span class="time margin-left-text">{{ content.time }}</span>
+            <span class="time margin-left">{{ content.time }}</span>
           </div>
           <div class="context">{{ content.content }}</div>
         </div>
       </div>
-      <a-empty v-if="item.data.length === 0" />
-    </a-tab-pane>
-  </a-tabs>
+      <div class="notice-empty" v-if="item.data.length === 0">
+        <t-empty />
+      </div>
+    </t-tab-panel>
+  </t-tabs>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +36,7 @@ const noticeData = ref([
   { id: 3, title: "backlog", data: [] }
 ]);
 const current = ref<number>(1);
-const onTab = (key: number) => {
+const onTab = (key: any) => {
   current.value = key;
 };
 </script>
@@ -43,7 +45,8 @@ const onTab = (key: number) => {
 .notice {
   display: flex;
   align-items: center;
-  margin-bottom: $margin;
+  width: 244px;
+  margin: 16px;
   .notice_img {
     width: 36px;
     height: 36px;
@@ -64,12 +67,11 @@ const onTab = (key: number) => {
     }
   }
 }
-.margin-left-text {
-  margin-left: $margin-text;
+.notice-empty {
+  width: 244px;
+  margin: 16px;
 }
-
-// 解决tabs宽度异常的bug
-:deep(.arco-tabs-content .arco-tabs-content-list) {
-  display: unset;
+.margin-left {
+  margin-left: $margin-text;
 }
 </style>

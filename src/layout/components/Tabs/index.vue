@@ -1,54 +1,54 @@
 <template>
   <div class="tabs">
-    <a-tabs
-      :editable="true"
-      :hide-content="true"
-      :active-key="currentRoute.path"
-      size="medium"
-      type="line"
-      @tab-click="onTabs"
-      @delete="onDelete"
-    >
-      <a-tab-pane v-for="item of tabsList" :key="item.path" :title="$t(`menu.${item.meta.title}`)" :closable="!item.meta.affix" />
-    </a-tabs>
+    <div class="tabs-chunk">
+      <t-tabs :value="currentRoute.path" scroll-position="auto" theme="normal" @change="onTabs">
+        <t-tab-panel v-for="item of tabsList" :key="item.path" :value="item.path" :removable="!item.meta.affix">
+          <template #label>{{ $t(`menu.${item.meta.title}`) }}</template>
+        </t-tab-panel>
+      </t-tabs>
+    </div>
     <div class="tabs_setting">
-      <a-space>
-        <a-tooltip :content="$t(`system.refresh`)" position="bottom" mini>
-          <span ref="refreshRef" id="system-tabs-refresh" :class="rotateOpen && 'refresh'">
-            <icon-refresh :size="18" @click="refresh" />
+      <t-space align="center">
+        <t-tooltip :content="$t(`system.refresh`)" placement="bottom" show-arrow>
+          <span id="system-tabs-refresh" class="refresh" :class="{ rotating: rotateOpen }" @click="refresh">
+            <icon size="18px" name="refresh" />
           </span>
-        </a-tooltip>
-        <a-dropdown trigger="hover" :popup-max-height="false">
-          <div class="setting" id="system-tabs-setting"><icon-apps :size="18" /></div>
-          <template #content>
-            <a-doption @click="closeCurrent">
-              <template #icon><icon-close /></template>
-              <template #default>{{ $t(`system.close-current`) }}</template>
-            </a-doption>
-            <a-doption @click="closeSides('left')">
-              <template #icon><icon-left /></template>
-              <template #default>{{ $t(`system.close-left-side`) }}</template>
-            </a-doption>
-            <a-doption @click="closeSides('right')">
-              <template #icon><icon-right /></template>
-              <template #default>{{ $t(`system.close-right-side`) }}</template>
-            </a-doption>
-            <a-doption @click="closeOther('other')">
-              <template #icon><icon-close-circle /></template>
-              <template #default>{{ $t(`system.close-other`) }}</template>
-            </a-doption>
-            <a-doption @click="closeOther('all')">
-              <template #icon><icon-folder-delete /></template>
-              <template #default>{{ $t(`system.close-all`) }}</template>
-            </a-doption>
+        </t-tooltip>
+
+        <t-dropdown placement="bottom" trigger="hover">
+          <div class="setting" id="system-tabs-setting">
+            <icon size="18px" name="grid-view" />
+          </div>
+          <template #dropdown>
+            <t-dropdown-item @click="closeCurrent">
+              <icon size="18px" name="close" />
+              <span class="margin-left">{{ $t(`system.close-current`) }}</span>
+            </t-dropdown-item>
+            <t-dropdown-item @click="closeSides('left')">
+              <icon size="18px" name="chevron-left" />
+              <span class="margin-left">{{ $t(`system.close-left-side`) }}</span>
+            </t-dropdown-item>
+            <t-dropdown-item @click="closeSides('right')">
+              <icon size="18px" name="chevron-right" />
+              <span class="margin-left">{{ $t(`system.close-right-side`) }}</span>
+            </t-dropdown-item>
+            <t-dropdown-item @click="closeOther('other')">
+              <icon size="18px" name="close-circle" />
+              <span class="margin-left">{{ $t(`system.close-other`) }}</span>
+            </t-dropdown-item>
+            <t-dropdown-item @click="closeOther('all')">
+              <icon size="18px" name="folder-minus" />
+              <span class="margin-left">{{ $t(`system.close-all`) }}</span>
+            </t-dropdown-item>
           </template>
-        </a-dropdown>
-      </a-space>
+        </t-dropdown>
+      </t-space>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Icon } from "tdesign-icons-vue-next";
 import { storeToRefs } from "pinia";
 import { useRouteConfigStore } from "@/store/modules/route-config";
 import { useThemeConfig } from "@/store/modules/theme-config";
@@ -57,7 +57,7 @@ const routerStore = useRouteConfigStore();
 const { tabsList, currentRoute } = storeToRefs(routerStore);
 
 // 点击标签页，如果标签页存在，则跳转
-const onTabs = (key: string) => {
+const onTabs = (key: any) => {
   router.push(key);
 };
 
@@ -145,43 +145,88 @@ const closeOther = (type: string) => {
   align-items: center;
   justify-content: space-between;
   height: 40px;
+  background: white;
   border-bottom: $border-1 solid $color-border-2;
+  .tabs-chunk {
+    flex: 1;
+    width: 0;
+  }
+  .refresh {
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease-in-out;
+    &.rotating {
+      animation: rotate-and-stay 0.5s forwards;
+    }
+  }
+
+  @keyframes rotate-and-stay {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   .tabs_setting {
     margin: 0 0 0 $margin;
     .setting {
       margin-right: $margin;
       color: $color-text-2;
     }
-    .refresh {
-      transform: rotate(360deg);
-      transition: transform 0.5s;
-    }
   }
 }
-:deep(.arco-tabs-nav-tab) {
-  // 移入展示关闭icon
-  .arco-tabs-tab-closable {
-    svg {
-      width: 0;
-      transition: all 0.2s;
-    }
-    &:hover {
-      svg {
-        width: 1em;
-      }
-    }
-  }
-
-  // 消除tab移入的背景色
-  &:hover .arco-tabs-tab-title::before {
-    background: unset;
-  }
+.margin-left {
+  margin-left: $margin-text;
 }
 
-// 消除tabs底部边线
-:deep(.arco-tabs-nav) {
-  &::before {
-    background: unset;
+// 自定义td tab样式
+:deep(.t-tabs__nav-item.t-size-m) {
+  height: 40px;
+  line-height: 40px;
+}
+:deep(.t-tabs__nav-item-wrapper) {
+  // padding: 0;
+  margin: 0;
+}
+
+// td tabs文字样式
+:deep(.t-tabs__nav-item.t-is-active) {
+  text-shadow: none;
+}
+
+// 高亮的横条
+:deep(.t-tabs__bar.t-is-top) {
+  // width: unset;
+  height: 2px;
+}
+
+// td tab滚动按钮样式
+:deep(.t-tabs__btn.t-size-m) {
+  width: 30px;
+  height: 39px;
+  line-height: 39px;
+}
+:deep(.t-tabs__operations--right .t-tabs__btn:first-child) {
+  box-shadow: none;
+}
+:deep(.t-tabs__btn) {
+  background: transparent;
+  border-left: none;
+}
+:deep(.t-tabs__btn--left) {
+  border-right: none;
+  box-shadow: none;
+}
+:deep(.t-tabs__operations) {
+  border-bottom: $border-1 solid $color-border-2;
+}
+
+// 关闭按钮
+:deep(.t-tabs__nav-item) {
+  .remove-btn {
+    margin-left: none;
   }
 }
 </style>
+<style lang="scss"></style>
