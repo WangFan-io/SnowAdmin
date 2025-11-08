@@ -1,5 +1,6 @@
 <template>
   <t-drawer
+    class="drawer-aside"
     size="220px"
     :closeBtn="false"
     :closeOnEscKeydown="false"
@@ -57,7 +58,9 @@ const isDrawerVisible = computed({
 }
 </style>
 <style lang="scss">
-.t-drawer__body {
-  padding: 0;
+.drawer-aside {
+  .t-drawer__body {
+    padding: 0;
+  }
 }
 </style>

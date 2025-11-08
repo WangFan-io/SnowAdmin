@@ -22,6 +22,9 @@
 import MenuItem from "@/layout/components/Menu/menu-item.vue";
 import MenuItemIcon from "@/layout/components/Menu/menu-item-icon.vue";
 import { useMenuMethod } from "@/hooks/useMenuMethod";
+import { storeToRefs } from "pinia";
+import { useThemeConfig } from "@/store/modules/theme-config";
+
 defineOptions({ name: "MenuItem", inheritAttrs: false });
 
 interface Props {
@@ -34,11 +37,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { menuShow, aMenuShow } = useMenuMethod();
+
+const themeStore = useThemeConfig();
+const { layoutType } = storeToRefs(themeStore);
 </script>
 
 <style lang="scss" scoped>
 .menu-item-text {
-  margin-left: $margin;
+  margin-left: v-bind('layoutType === "layoutHead" ? "0px" : "14px"');
 }
 :deep(.t-menu__item) {
   height: var(--td-size-12);

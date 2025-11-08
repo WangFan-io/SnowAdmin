@@ -1,7 +1,7 @@
 <template>
   <div class="tabs">
     <div class="tabs-chunk">
-      <t-tabs :value="currentRoute.path" scroll-position="auto" theme="normal" @change="onTabs">
+      <t-tabs :value="currentRoute.path" scroll-position="auto" theme="normal" @change="onTabs" @remove="onDelete">
         <t-tab-panel v-for="item of tabsList" :key="item.path" :value="item.path" :removable="!item.meta.affix">
           <template #label>{{ $t(`menu.${item.meta.title}`) }}</template>
         </t-tab-panel>
@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import { Icon } from "tdesign-icons-vue-next";
+import { TabsProps } from "tdesign-vue-next";
 import { storeToRefs } from "pinia";
 import { useRouteConfigStore } from "@/store/modules/route-config";
 import { useThemeConfig } from "@/store/modules/theme-config";
@@ -61,12 +62,12 @@ const onTabs = (key: any) => {
   router.push(key);
 };
 
-// 删除当前标签页并跳转到最后一个标签页
-const onDelete = (path: string) => {
-  routerStore.removeTabsList(path);
-  routerStore.removeRouteName(path);
+// 删除标签页，如果是当前页则跳转到最后一个标签页
+const onDelete: TabsProps["onRemove"] = ({ value }) => {
+  routerStore.removeTabsList(value);
+  routerStore.removeRouteName(value);
   if (tabsList.value.length == 0) return;
-  if (currentRoute.value.path != path) return;
+  if (currentRoute.value.path != value) return;
   router.push(tabsList.value.at(-1).path);
 };
 
@@ -229,4 +230,3 @@ const closeOther = (type: string) => {
   }
 }
 </style>
-<style lang="scss"></style>

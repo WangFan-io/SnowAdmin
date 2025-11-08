@@ -5,14 +5,14 @@
       <div>
         <t-divider>{{ $t(`system.navigate mode`) }}</t-divider>
         <div class="flex-center">
-          <a-tooltip v-for="item in layoutList" :key="item.value" :content="item.label" position="top" mini>
+          <t-tooltip v-for="item in layoutList" :key="item.value" :content="item.label" placement="bottom" show-arrow>
             <div
               :class="layoutType === item.value ? `current-layout ${item.class}` : item.class"
               @click="layouetChange(item.value)"
             >
               <icon size="14px" name="check-circle" class="layout-icon" />
             </div>
-          </a-tooltip>
+          </t-tooltip>
         </div>
       </div>
       <div class="box-gap">
@@ -201,6 +201,7 @@ const handleCancel = () => {
   &::before {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 10px;
     content: "";
@@ -212,6 +213,7 @@ const handleCancel = () => {
   &::before {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 10px;
     content: "";

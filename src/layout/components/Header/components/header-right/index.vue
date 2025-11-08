@@ -217,6 +217,8 @@ const logOut = () => {
   overflow: hidden;
   cursor: pointer;
   .my_image {
+    display: flex;
+    place-items: center;
     margin-right: 8px;
     border-radius: 50%;
   }
