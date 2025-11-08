@@ -44,7 +44,7 @@
           </a-table-column>
           <a-table-column title="预设时间" data-index="createTime"></a-table-column>
           <a-table-column title="执行时间" data-index="executionTime"></a-table-column>
-          <a-table-column title="操作" :width="100" align="center" :fixed="'right'">
+          <a-table-column title="操作" :width="100" align="center" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button type="primary" status="success" size="mini" @click="onDetail(record)">
@@ -63,8 +63,12 @@
 <script setup lang="ts">
 import { getCrontabLogsAPI } from "@/api/modules/monitor/index";
 import { useRouteConfigStore } from "@/store/modules/route-config";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
 defineOptions({ name: "crontab-logs" });
+
 let route = useRoute();
+const { isMobile } = useDevicesSize();
 const routerStore = useRouteConfigStore();
 const openState = ref(dictFilter("taskStatus"));
 

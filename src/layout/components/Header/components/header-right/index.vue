@@ -59,7 +59,7 @@
     <a-dropdown trigger="hover">
       <div class="my_setting" id="system-my-setting">
         <a-image width="32" height="32" fit="cover" :src="account.user.avatar || myImage" class="my_image" />
-        <span class="user-nickname">{{ account.user.nickName }}</span>
+        <span class="user-nickname" v-if="!isMobile">{{ account.user.nickName }}</span>
         <div class="icon_down">
           <icon-down style="stroke-width: 3" />
         </div>

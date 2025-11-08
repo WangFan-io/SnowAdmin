@@ -3,7 +3,7 @@
     <a-row align="center" :gutter="[0, 16]">
       <a-col :span="24">
         <a-card title="安全设置">
-          <a-form :model="form" :rules="rules" :style="{ width: '600px' }" @submit="onSubmit">
+          <a-form :model="form" :rules="rules" :layout="layoutMode" :style="{ maxWidth: '600px' }" @submit="onSubmit">
             <a-form-item field="password" label="登录密码">
               <a-input-password v-model="form.password" placeholder="请输入登录密码" allow-clear />
             </a-form-item>
@@ -27,10 +27,13 @@
 
 <script setup lang="ts">
 import useGlobalProperties from "@/hooks/useGlobalProperties";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 
 const emit = defineEmits(["refresh"]);
 const proxy = useGlobalProperties();
 const data = defineModel() as any;
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => (isMobile.value ? "vertical" : "horizontal"));
 const form = ref({
   id: "",
   password: "",

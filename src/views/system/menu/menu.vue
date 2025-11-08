@@ -51,7 +51,7 @@
         :scroll="{ x: '150%', y: '93%' }"
       >
         <template #columns>
-          <a-table-column title="菜单名称">
+          <a-table-column title="菜单名称" :width="120" ellipsis tooltip>
             <template #cell="{ record }">
               {{ $t(`menu.${record.meta.title}`) }}
             </template>
@@ -68,14 +68,14 @@
               <MenuItemIcon :svg-icon="record.meta.svgIcon" :icon="record.meta.icon" />
             </template>
           </a-table-column>
-          <a-table-column title="路由路径" data-index="path"></a-table-column>
-          <a-table-column title="路由名称" data-index="name"></a-table-column>
-          <a-table-column title="组件路径">
+          <a-table-column title="路由路径" data-index="path" :width="120" ellipsis tooltip></a-table-column>
+          <a-table-column title="路由名称" data-index="name" :width="120" ellipsis tooltip></a-table-column>
+          <a-table-column title="组件路径" :width="200" ellipsis tooltip>
             <template #cell="{ record }">
               {{ record.redirect ? record.redirect : record.component }}
             </template>
           </a-table-column>
-          <a-table-column title="权限标识" tooltip>
+          <a-table-column title="权限标识" :width="200" ellipsis tooltip>
             <template #cell="{ record }">
               {{ record.meta.roles }}
             </template>
@@ -125,7 +125,7 @@
               </a-space>
             </template>
           </a-table-column>
-          <a-table-column title="操作" align="center" :width="250" :fixed="'right'">
+          <a-table-column title="操作" align="center" :width="250" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button size="mini" type="primary" @click="onUpdate(record)">
@@ -149,16 +149,16 @@
       </a-table>
     </div>
 
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
           <a-form-item field="type" label="菜单类型" validate-trigger="blur">
-            <a-radio-group type="button" :disabled="addFrom.id" v-model="addFrom.type" @change="typeChange">
+            <a-radio-group type="button" :disabled="!!addFrom.id" v-model="addFrom.type" @change="typeChange">
               <a-radio v-for="item in menuType" :key="item.value" :value="item.value">{{ item.name }}</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item field="parentId" label="上级菜单" validate-trigger="blur" :disabled="addFrom.id">
+          <a-form-item field="parentId" label="上级菜单" validate-trigger="blur" :disabled="!!addFrom.id">
             <a-tree-select
               v-model="addFrom.parentId"
               :data="menuTree"
@@ -329,11 +329,27 @@
 
 <script setup lang="ts">
 import MenuItemIcon from "@/layout/components/Menu/menu-item-icon.vue";
-import { getMenuListAPI } from "@/api/modules/system/index";
 import useGlobalProperties from "@/hooks/useGlobalProperties";
+import { getMenuListAPI } from "@/api/modules/system/index";
 import { deepClone, getPascalCase } from "@/utils";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
 const proxy = useGlobalProperties();
 const openState = ref(dictFilter("status"));
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => {
+  let info = {
+    mobile: {
+      width: "95%",
+      layout: "vertical"
+    },
+    desktop: {
+      width: "40%",
+      layout: "horizontal"
+    }
+  };
+  return isMobile.value ? info.mobile : info.desktop;
+});
 const form = ref({
   name: "",
   hide: "",

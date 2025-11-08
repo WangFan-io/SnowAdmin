@@ -29,7 +29,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 // 通过计算属性实现数据实时更新
 // 将序列化的字符串美观输出，\t 换行
-const codeValue = computed(() => props.codeJson);
+const codeValue = computed({
+  get() {
+    return props.codeJson;
+  },
+  set() {
+    // v-model需要set方法，但这里不做任何操作
+  }
+});
 
 // 基础配置
 const config = ref({

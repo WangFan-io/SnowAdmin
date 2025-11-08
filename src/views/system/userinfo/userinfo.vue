@@ -1,10 +1,10 @@
 <template>
   <div class="snow-page">
-    <a-spin :loading="loading" tip="loading...">
+    <a-spin :loading="loading" class="container" tip="loading...">
       <a-card :bordered="false">
         <a-row align="center">
-          <a-col :span="2">
-            <div>
+          <a-col :span="isMobile ? 24 : 2">
+            <div :class="{ center: isMobile }">
               <a-avatar :size="100" @click="toast" trigger-type="mask">
                 <img alt="avatar" :src="userInfo.avatar" />
                 <template #trigger-icon>
@@ -13,9 +13,9 @@
               </a-avatar>
             </div>
           </a-col>
-          <a-col :span="22">
+          <a-col :span="isMobile ? 24 : 22">
             <a-space direction="vertical" size="large">
-              <a-descriptions :data="detail" :column="4" title="用户资料" :align="{ label: 'right' }">
+              <a-descriptions :data="detail" :column="isMobile ? 1 : 4" title="用户资料" :align="{ label: 'right' }">
                 <template #value="{ value, data }">
                   <span v-if="data.key === 'roles'">
                     {{ Array.isArray(value) && value.map((curr: any) => curr.name).join(",") }}
@@ -55,13 +55,14 @@
 import BasicInfo from "@/views/system/userinfo/components/basic-info.vue";
 import SecuritySettings from "@/views/system/userinfo/components/security-settings.vue";
 import useGlobalProperties from "@/hooks/useGlobalProperties";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 import { getUserInfoAPI } from "@/api/modules/user/index";
 import { useRouteConfigStore } from "@/store/modules/route-config";
 
 const route = useRoute();
 const proxy = useGlobalProperties();
 const routerStore = useRouteConfigStore();
-
+const { isMobile } = useDevicesSize();
 interface Detail {
   key: string;
   label: string;
@@ -162,12 +163,15 @@ routerStore.setTabsTitle(`用户${route.query.userName ? " - " + route.query.use
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+}
 .margin-top {
   margin-top: $padding;
 }
-
-// 解决tabs宽度异常的bug
-// :deep(.arco-tabs-content .arco-tabs-content-list) {
-//   display: unset;
-// }
+.center {
+  display: flex;
+  justify-content: center;
+}
 </style>

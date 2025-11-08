@@ -54,7 +54,7 @@
           </a-table-column>
           <a-table-column title="备注" data-index="remark" ellipsis tooltip></a-table-column>
           <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-          <a-table-column title="操作" :width="250" align="center" :fixed="'right'">
+          <a-table-column title="操作" :width="250" align="center" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button type="primary" status="success" size="mini" @click="onLogs(record)">
@@ -140,10 +140,14 @@
 </template>
 
 <script setup lang="ts">
-import { getCrontabAPI } from "@/api/modules/monitor/index";
 import { deepClone } from "@/utils";
+import { getCrontabAPI } from "@/api/modules/monitor/index";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
 defineOptions({ name: "crontab" });
+
 const router = useRouter();
+const { isMobile } = useDevicesSize();
 const openState = ref(dictFilter("status"));
 const misfirePolicyOption = ref([
   { name: "循环", value: 1 },
