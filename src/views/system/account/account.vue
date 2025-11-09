@@ -139,10 +139,14 @@
               </a-form-item>
             </a-col>
           </a-row>
-          <a-row :gutter="24">
-            <a-col :span="12">
-              <a-form-item field="phone" label="手机号码" validate-trigger="blur">
-                <a-input v-model="addFrom.phone" placeholder="请输入手机号码" allow-clear />
+          <a-row>
+            <a-col :span="24">
+              <a-form-item field="sex" label="性别" validate-trigger="blur">
+                <a-radio-group v-model="addFrom.sex" :options="sexOption">
+                  <template #label="{ data }">
+                    <div>{{ data.name }}</div>
+                  </template>
+                </a-radio-group>
               </a-form-item>
             </a-col>
           </a-row>
@@ -191,6 +195,7 @@ import { useDevicesSize } from "@/hooks/useDevicesSize";
 
 const router = useRouter();
 const openState = ref(dictFilter("status"));
+const sexOption = ref(dictFilter("gender"));
 const { isMobile } = useDevicesSize();
 const layoutMode = computed(() => {
   let info = {
