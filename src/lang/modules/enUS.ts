@@ -26,7 +26,7 @@ export default {
     ["message"]: "Message",
     ["backlog"]: "Backlog",
     ["switch-language-to-preview"]: "Please switch the language to preview the internationalization effect",
-    ["please-enter-something"]: "Please enter something",
+    ["please-enter-something"]: "please enter something",
     ["color weakness mode"]: "color weakness mode",
     ["grey mode"]: "grey mode",
     ["sidebar is dark"]: "sidebar is dark",
