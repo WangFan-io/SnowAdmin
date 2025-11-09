@@ -49,8 +49,8 @@
           <a-table-column title="序号" :width="64">
             <template #cell="cell">{{ cell.rowIndex + 1 }}</template>
           </a-table-column>
-          <a-table-column title="角色名称" data-index="name"></a-table-column>
-          <a-table-column title="角色标识" data-index="code"></a-table-column>
+          <a-table-column title="角色名称" data-index="name" :width="120" ellipsis tooltip></a-table-column>
+          <a-table-column title="角色标识" data-index="code" :width="120" ellipsis tooltip></a-table-column>
           <a-table-column title="排序" data-index="sort" :width="100" align="center"></a-table-column>
           <a-table-column title="状态" :width="100" align="center">
             <template #cell="{ record }">
@@ -58,9 +58,9 @@
               <a-tag bordered size="small" color="red" v-else>禁用</a-tag>
             </template>
           </a-table-column>
-          <a-table-column title="描述" data-index="description" :ellipsis="true" :tooltip="true"></a-table-column>
+          <a-table-column title="描述" data-index="description" ellipsis tooltip></a-table-column>
           <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-          <a-table-column title="操作" :width="280" align="center" :fixed="'right'">
+          <a-table-column title="操作" :width="280" align="center" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button type="primary" status="success" size="mini" :disabled="record.admin" @click="onPrivileges(record)">
@@ -83,10 +83,10 @@
         </template>
       </a-table>
     </div>
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
           <a-form-item field="name" label="角色名称" validate-trigger="blur">
             <a-input v-model="addFrom.name" placeholder="请输入角色名称" allow-clear />
           </a-form-item>
@@ -119,7 +119,7 @@
       </div>
     </a-modal>
 
-    <a-drawer :visible="drawerOpen" :width="500" @ok="drawerOk" @cancel="drawerCancel">
+    <a-drawer :visible="drawerOpen" :width="isMobile ? '100%' : 500" @ok="drawerOk" @cancel="drawerCancel">
       <template #title> 分配权限 </template>
       <div>
         <a-card>
@@ -168,11 +168,27 @@
 </template>
 
 <script setup lang="ts">
+import useGlobalProperties from "@/hooks/useGlobalProperties";
 import { getRoleAPI, getMenuListAPI, getUserPermissionAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
-import useGlobalProperties from "@/hooks/useGlobalProperties";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
 const proxy = useGlobalProperties();
 const openState = ref(dictFilter("status"));
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => {
+  let info = {
+    mobile: {
+      width: "95%",
+      layout: "vertical"
+    },
+    desktop: {
+      width: "40%",
+      layout: "horizontal"
+    }
+  };
+  return isMobile.value ? info.mobile : info.desktop;
+});
 const form = ref({
   name: "",
   code: "",

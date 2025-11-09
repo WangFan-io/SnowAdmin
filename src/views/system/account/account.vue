@@ -1,115 +1,121 @@
 <template>
   <div class="snow-fill">
     <div class="snow-fill-inner container">
-      <div class="left-box">
-        <a-input placeholder="请输入部门名称">
-          <template #prefix>
-            <icon-search />
-          </template>
-        </a-input>
-        <div class="tree-box">
-          <a-tree ref="treeRef" :field-names="fieldNames" :data="treeData" show-line @select="onSelectTree"> </a-tree>
-        </div>
-      </div>
-      <div class="right-box">
-        <a-space wrap>
-          <a-input v-model="form.name" placeholder="请输入用户名称" allow-clear />
-          <a-input v-model="form.phone" placeholder="请输入手机号码" allow-clear />
-          <a-select placeholder="用户状态" v-model="form.status" style="width: 120px" allow-clear>
-            <a-option v-for="item in openState" :key="item.value" :value="item.value">{{ item.name }}</a-option>
-          </a-select>
-          <a-range-picker v-model="form.createTime" show-time format="YYYY-MM-DD HH:mm" allow-clear />
-          <a-button type="primary" @click="search">
-            <template #icon><icon-search /></template>
-            <span>查询</span>
-          </a-button>
-          <a-button @click="reset">
-            <template #icon><icon-refresh /></template>
-            <span>重置</span>
-          </a-button>
-        </a-space>
+      <s-fold-page :width="280">
+        <template #sider>
+          <div class="left-box">
+            <a-input placeholder="请输入部门名称">
+              <template #prefix>
+                <icon-search />
+              </template>
+            </a-input>
+            <div class="tree-box">
+              <a-tree ref="treeRef" :field-names="fieldNames" :data="treeData" show-line @select="onSelectTree"> </a-tree>
+            </div>
+          </div>
+        </template>
+        <template #content>
+          <div class="right-box">
+            <a-space wrap>
+              <a-input v-model="form.name" placeholder="请输入用户名称" allow-clear />
+              <a-input v-model="form.phone" placeholder="请输入手机号码" allow-clear />
+              <a-select placeholder="用户状态" v-model="form.status" style="width: 120px" allow-clear>
+                <a-option v-for="item in openState" :key="item.value" :value="item.value">{{ item.name }}</a-option>
+              </a-select>
+              <a-range-picker v-model="form.createTime" show-time format="YYYY-MM-DD HH:mm" allow-clear />
+              <a-button type="primary" @click="search">
+                <template #icon><icon-search /></template>
+                <span>查询</span>
+              </a-button>
+              <a-button @click="reset">
+                <template #icon><icon-refresh /></template>
+                <span>重置</span>
+              </a-button>
+            </a-space>
 
-        <a-row>
-          <a-space wrap>
-            <a-button type="primary" @click="onAdd">
-              <template #icon><icon-plus /></template>
-              <span>新增</span>
-            </a-button>
-            <a-button type="primary" status="danger">
-              <template #icon><icon-delete /></template>
-              <span>删除</span>
-            </a-button>
-          </a-space>
-        </a-row>
+            <a-row>
+              <a-space wrap>
+                <a-button type="primary" @click="onAdd">
+                  <template #icon><icon-plus /></template>
+                  <span>新增</span>
+                </a-button>
+                <a-button type="primary" status="danger">
+                  <template #icon><icon-delete /></template>
+                  <span>删除</span>
+                </a-button>
+              </a-space>
+            </a-row>
 
-        <a-table
-          row-key="id"
-          :data="accountList"
-          :bordered="{ cell: true }"
-          :loading="loading"
-          :scroll="{ x: '120%', y: '100%' }"
-          :pagination="pagination"
-          :row-selection="{ type: 'checkbox', showCheckedAll: true }"
-          :selected-keys="selectedKeys"
-          @select="select"
-          @select-all="selectAll"
-        >
-          <template #columns>
-            <a-table-column title="序号" :width="64">
-              <template #cell="cell">{{ cell.rowIndex + 1 }}</template>
-            </a-table-column>
-            <a-table-column title="用户名称" data-index="userName"></a-table-column>
-            <a-table-column title="昵称" data-index="nickName"></a-table-column>
-            <a-table-column title="性别" data-index="sex" align="center">
-              <template #cell="{ record }">
-                <a-tag bordered size="small" color="arcoblue" v-if="record.sex == 1">男</a-tag>
-                <a-tag bordered size="small" color="red" v-else-if="record.sex == 0">女</a-tag>
-                <a-tag bordered size="small" v-else>未知</a-tag>
+            <a-table
+              row-key="id"
+              :data="accountList"
+              :bordered="{ cell: true }"
+              :loading="loading"
+              :scroll="{ x: '120%', y: '100%' }"
+              :pagination="pagination"
+              :row-selection="{ type: 'checkbox', showCheckedAll: true }"
+              :selected-keys="selectedKeys"
+              @select="select"
+              @select-all="selectAll"
+            >
+              <template #columns>
+                <a-table-column title="序号" :width="64">
+                  <template #cell="cell">{{ cell.rowIndex + 1 }}</template>
+                </a-table-column>
+                <a-table-column title="用户名称" data-index="userName" :width="120" ellipsis tooltip></a-table-column>
+                <a-table-column title="昵称" data-index="nickName" :width="120" ellipsis tooltip></a-table-column>
+                <a-table-column title="性别" data-index="sex" align="center" :width="80">
+                  <template #cell="{ record }">
+                    <a-tag bordered size="small" color="arcoblue" v-if="record.sex == 1">男</a-tag>
+                    <a-tag bordered size="small" color="red" v-else-if="record.sex == 0">女</a-tag>
+                    <a-tag bordered size="small" v-else>未知</a-tag>
+                  </template>
+                </a-table-column>
+                <a-table-column title="部门" data-index="deptName" :width="180" ellipsis tooltip></a-table-column>
+                <a-table-column title="手机号" data-index="phone" :width="180"></a-table-column>
+                <a-table-column title="状态" :width="100" align="center">
+                  <template #cell="{ record }">
+                    <a-tag bordered size="small" color="arcoblue" v-if="record.status === 1">启用</a-tag>
+                    <a-tag bordered size="small" color="red" v-else>禁用</a-tag>
+                  </template>
+                </a-table-column>
+                <a-table-column title="描述" data-index="description" ellipsis tooltip></a-table-column>
+                <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
+                <a-table-column title="操作" :width="200" align="center" :fixed="isMobile ? '' : 'right'">
+                  <template #cell="{ record }">
+                    <a-space>
+                      <a-button type="primary" size="mini" @click="onUpdate(record)">
+                        <template #icon><icon-edit /></template>
+                        <span>修改</span>
+                      </a-button>
+                      <a-popconfirm type="warning" content="确定删除该账号吗?">
+                        <a-button type="primary" status="danger" size="mini" :disabled="record.admin">
+                          <template #icon><icon-delete /></template>
+                          <span>删除</span>
+                        </a-button>
+                      </a-popconfirm>
+                      <a-tooltip content="用户详情">
+                        <a-button type="primary" status="success" size="mini" @click="onDetail(record)">
+                          <template #icon>
+                            <icon-more />
+                          </template>
+                        </a-button>
+                      </a-tooltip>
+                    </a-space>
+                  </template>
+                </a-table-column>
               </template>
-            </a-table-column>
-            <a-table-column title="部门" data-index="deptName"></a-table-column>
-            <a-table-column title="手机号" data-index="phone" :width="180"></a-table-column>
-            <a-table-column title="状态" :width="100" align="center">
-              <template #cell="{ record }">
-                <a-tag bordered size="small" color="arcoblue" v-if="record.status === 1">启用</a-tag>
-                <a-tag bordered size="small" color="red" v-else>禁用</a-tag>
-              </template>
-            </a-table-column>
-            <a-table-column title="描述" data-index="description" :ellipsis="true" :tooltip="true"></a-table-column>
-            <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-            <a-table-column title="操作" :width="200" align="center" :fixed="'right'">
-              <template #cell="{ record }">
-                <a-space>
-                  <a-button type="primary" size="mini" @click="onUpdate(record)">
-                    <template #icon><icon-edit /></template>
-                    <span>修改</span>
-                  </a-button>
-                  <a-popconfirm type="warning" content="确定删除该账号吗?">
-                    <a-button type="primary" status="danger" size="mini" :disabled="record.admin">
-                      <template #icon><icon-delete /></template>
-                      <span>删除</span>
-                    </a-button>
-                  </a-popconfirm>
-                  <a-tooltip content="用户详情">
-                    <a-button type="primary" status="success" size="mini" @click="onDetail(record)">
-                      <template #icon>
-                        <icon-more />
-                      </template>
-                    </a-button>
-                  </a-tooltip>
-                </a-space>
-              </template>
-            </a-table-column>
-          </template>
-        </a-table>
-      </div>
+            </a-table>
+          </div>
+        </template>
+      </s-fold-page>
     </div>
 
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
-          <a-row>
+        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
+          <a-row :gutter="24">
             <a-col :span="12">
               <a-form-item field="userName" label="用户名称" validate-trigger="blur">
                 <a-input v-model="addFrom.userName" placeholder="请输入用户名称" allow-clear />
@@ -121,7 +127,7 @@
               </a-form-item>
             </a-col>
           </a-row>
-          <a-row>
+          <a-row :gutter="24">
             <a-col :span="12">
               <a-form-item field="phone" label="手机号码" validate-trigger="blur">
                 <a-input v-model="addFrom.phone" placeholder="请输入手机号码" allow-clear />
@@ -185,10 +191,25 @@
 <script setup lang="ts">
 import { getDivisionAPI, getAccountAPI, getRoleAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 
 const router = useRouter();
 const openState = ref(dictFilter("status"));
 const sexOption = ref(dictFilter("gender"));
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => {
+  let info = {
+    mobile: {
+      width: "95%",
+      layout: "vertical"
+    },
+    desktop: {
+      width: "40%",
+      layout: "horizontal"
+    }
+  };
+  return isMobile.value ? info.mobile : info.desktop;
+});
 const form = ref({
   name: "",
   phone: "",
@@ -365,11 +386,12 @@ onMounted(() => {
 <style lang="scss" scoped>
 .container {
   display: flex;
+  flex-direction: row;
   column-gap: $padding;
   .left-box {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 260px;
     height: 100%;
     .tree-box {
       flex: 1;

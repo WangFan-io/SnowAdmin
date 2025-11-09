@@ -40,13 +40,13 @@
         :loading="loading"
       >
         <template #columns>
-          <a-table-column title="部门名称">
+          <a-table-column title="部门名称" :width="280" ellipsis tooltip>
             <template #cell="{ record }">
               {{ record.name }}
             </template>
           </a-table-column>
-          <a-table-column title="排序" data-index="sort" :width="100" align="center"></a-table-column>
-          <a-table-column title="启用状态" align="center">
+          <a-table-column title="排序" data-index="sort" :width="100" ellipsis tooltip align="center"></a-table-column>
+          <a-table-column title="启用状态" align="center" :width="100">
             <template #cell="{ record }">
               <a-space>
                 <a-tag bordered size="small" color="arcoblue" v-if="record.status">启用</a-tag>
@@ -54,9 +54,9 @@
               </a-space>
             </template>
           </a-table-column>
-          <a-table-column title="描述" data-index="description" :ellipsis="true" :tooltip="true"></a-table-column>
-          <a-table-column title="创建时间" data-index="createTime" :ellipsis="true" :tooltip="true"></a-table-column>
-          <a-table-column title="操作" align="center" :fixed="'right'">
+          <a-table-column title="描述" data-index="description" ellipsis tooltip></a-table-column>
+          <a-table-column title="创建时间" data-index="createTime" :width="220" ellipsis tooltip></a-table-column>
+          <a-table-column title="操作" align="center" :width="250" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button size="mini" type="primary" @click="onUpdate(record)">
@@ -80,10 +80,10 @@
       </a-table>
     </div>
 
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
           <a-form-item field="parentId" label="上级部门" validate-trigger="blur">
             <a-tree-select
               v-model="addFrom.parentId"
@@ -153,8 +153,24 @@
 </template>
 
 <script setup lang="ts">
-import { getDivisionAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
+import { getDivisionAPI } from "@/api/modules/system/index";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => {
+  let info = {
+    mobile: {
+      width: "95%",
+      layout: "vertical"
+    },
+    desktop: {
+      width: "40%",
+      layout: "horizontal"
+    }
+  };
+  return isMobile.value ? info.mobile : info.desktop;
+});
 
 // 新增
 const open = ref(false);

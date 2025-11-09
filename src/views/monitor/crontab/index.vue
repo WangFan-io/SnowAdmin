@@ -54,7 +54,7 @@
           </a-table-column>
           <a-table-column title="备注" data-index="remark" ellipsis tooltip></a-table-column>
           <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-          <a-table-column title="操作" :width="250" align="center" :fixed="'right'">
+          <a-table-column title="操作" :width="250" align="center" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-button type="primary" status="success" size="mini" @click="onLogs(record)">
@@ -78,10 +78,10 @@
       </a-table>
     </div>
 
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
           <a-form-item field="name" label="任务名称" validate-trigger="blur">
             <a-input v-model="addFrom.name" placeholder="请输入任务名称" allow-clear />
           </a-form-item>
@@ -140,11 +140,28 @@
 </template>
 
 <script setup lang="ts">
-import { getCrontabAPI } from "@/api/modules/monitor/index";
 import { deepClone } from "@/utils";
+import { getCrontabAPI } from "@/api/modules/monitor/index";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
 defineOptions({ name: "crontab" });
+
 const router = useRouter();
 const openState = ref(dictFilter("status"));
+const { isMobile } = useDevicesSize();
+const layoutMode = computed(() => {
+  let info = {
+    mobile: {
+      width: "95%",
+      layout: "vertical"
+    },
+    desktop: {
+      width: "40%",
+      layout: "horizontal"
+    }
+  };
+  return isMobile.value ? info.mobile : info.desktop;
+});
 const misfirePolicyOption = ref([
   { name: "循环", value: 1 },
   { name: "执行一次", value: 2 }

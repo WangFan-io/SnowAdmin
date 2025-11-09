@@ -43,7 +43,7 @@
           <a-table-column title="浏览器" data-index="browser" ellipsis tooltip></a-table-column>
           <a-table-column title="操作系统" data-index="os" ellipsis tooltip></a-table-column>
           <a-table-column title="登录时间" data-index="loginTime" ellipsis tooltip></a-table-column>
-          <a-table-column title="操作" :width="100" align="center" :fixed="'right'">
+          <a-table-column title="操作" :width="100" align="center" :fixed="isMobile ? '' : 'right'">
             <template #cell="{ record }">
               <a-space>
                 <a-popconfirm type="warning" content="确定强制退出该账号吗?" @ok="onLogout(record)">
@@ -62,8 +62,13 @@
 </template>
 
 <script setup lang="ts">
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 import { getOnlineuserAPI } from "@/api/modules/monitor/index";
+
 defineOptions({ name: "onlineuser" });
+
+const { isMobile } = useDevicesSize();
+
 const form = ref({
   loginLocation: "",
   userName: "",
