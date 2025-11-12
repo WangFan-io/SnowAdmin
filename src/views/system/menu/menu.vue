@@ -125,7 +125,7 @@
               </a-space>
             </template>
           </a-table-column>
-          <a-table-column title="操作" align="center" :width="250" :fixed="isMobile ? '' : 'right'">
+          <a-table-column title="操作" align="center" :width="250" :fixed="tableFixed">
             <template #cell="{ record }">
               <a-space>
                 <a-button size="mini" type="primary" @click="onUpdate(record)">
@@ -149,10 +149,10 @@
       </a-table>
     </div>
 
-    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="dialogWidth()" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="formLayout" :rules="rules" :model="addFrom">
           <a-form-item field="type" label="菜单类型" validate-trigger="blur">
             <a-radio-group type="button" :disabled="!!addFrom.id" v-model="addFrom.type" @change="typeChange">
               <a-radio v-for="item in menuType" :key="item.value" :value="item.value">{{ item.name }}</a-radio>
@@ -332,24 +332,11 @@ import MenuItemIcon from "@/layout/components/Menu/menu-item-icon.vue";
 import useGlobalProperties from "@/hooks/useGlobalProperties";
 import { getMenuListAPI } from "@/api/modules/system/index";
 import { deepClone, getPascalCase } from "@/utils";
-import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
 
 const proxy = useGlobalProperties();
 const openState = ref(dictFilter("status"));
-const { isMobile } = useDevicesSize();
-const layoutMode = computed(() => {
-  let info = {
-    mobile: {
-      width: "95%",
-      layout: "vertical"
-    },
-    desktop: {
-      width: "40%",
-      layout: "horizontal"
-    }
-  };
-  return isMobile.value ? info.mobile : info.desktop;
-});
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const form = ref({
   name: "",
   hide: "",

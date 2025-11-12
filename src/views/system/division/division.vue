@@ -56,7 +56,7 @@
           </a-table-column>
           <a-table-column title="描述" data-index="description" ellipsis tooltip></a-table-column>
           <a-table-column title="创建时间" data-index="createTime" :width="220" ellipsis tooltip></a-table-column>
-          <a-table-column title="操作" align="center" :width="250" :fixed="isMobile ? '' : 'right'">
+          <a-table-column title="操作" align="center" :width="250" :fixed="tableFixed">
             <template #cell="{ record }">
               <a-space>
                 <a-button size="mini" type="primary" @click="onUpdate(record)">
@@ -80,10 +80,10 @@
       </a-table>
     </div>
 
-    <a-modal :width="layoutMode.width" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="dialogWidth()" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="formLayout" :rules="rules" :model="addFrom">
           <a-form-item field="parentId" label="上级部门" validate-trigger="blur">
             <a-tree-select
               v-model="addFrom.parentId"
@@ -155,22 +155,9 @@
 <script setup lang="ts">
 import { deepClone } from "@/utils";
 import { getDivisionAPI } from "@/api/modules/system/index";
-import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
 
-const { isMobile } = useDevicesSize();
-const layoutMode = computed(() => {
-  let info = {
-    mobile: {
-      width: "95%",
-      layout: "vertical"
-    },
-    desktop: {
-      width: "40%",
-      layout: "horizontal"
-    }
-  };
-  return isMobile.value ? info.mobile : info.desktop;
-});
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 
 // 新增
 const open = ref(false);

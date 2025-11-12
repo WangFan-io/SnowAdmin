@@ -8,7 +8,7 @@
       </div>
     </a-card>
     <a-card class="margin-top" title="项目信息">
-      <a-descriptions :column="layoutColumn" bordered>
+      <a-descriptions :column="descriptionsColumn(1, 2)" bordered>
         <a-descriptions-item v-for="item of projectInfo" :key="item.label" :label="item.label">
           <a-link :href="item.value" v-if="item.link" target="_blank">{{ item.label }}</a-link>
           <span v-else>{{ item.value }}</span>
@@ -16,27 +16,19 @@
       </a-descriptions>
     </a-card>
     <a-card class="margin-top" title="生产环境依赖">
-      <a-descriptions :data="dependencies" bordered :layout="layoutType" :column="layoutColumn" />
+      <a-descriptions :data="dependencies" bordered :layout="descriptionsLayout" :column="descriptionsColumn(1, 2)" />
     </a-card>
     <a-card class="margin-top" title="开发环境依赖">
-      <a-descriptions :data="devDependencies" bordered :layout="layoutType" :column="layoutColumn" />
+      <a-descriptions :data="devDependencies" bordered :layout="descriptionsLayout" :column="descriptionsColumn(1, 2)" />
     </a-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import packageJson from "../../../package.json";
-import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
 
-const { isMobile } = useDevicesSize();
-
-const layoutType = computed(() => {
-  return isMobile.value ? "inline-vertical" : "right";
-});
-
-const layoutColumn = computed(() => {
-  return isMobile.value ? 1 : 2;
-});
+const { descriptionsLayout, descriptionsColumn } = useLayoutModel();
 
 const projectInfo: any = [
   {

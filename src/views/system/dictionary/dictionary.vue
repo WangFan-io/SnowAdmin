@@ -59,7 +59,7 @@
           </a-table-column>
           <a-table-column title="描述" data-index="description" ellipsis tooltip></a-table-column>
           <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-          <a-table-column title="操作" :width="280" align="center" :fixed="isMobile ? '' : 'right'">
+          <a-table-column title="操作" :width="280" align="center" :fixed="tableFixed">
             <template #cell="{ record }">
               <a-space>
                 <a-button type="primary" status="success" size="mini" @click="onDictData(record)">
@@ -83,10 +83,10 @@
       </a-table>
     </div>
 
-    <a-modal :width="isMobile ? '95%' : '30%'" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
+    <a-modal :width="dialogWidth('30%')" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
       <template #title> {{ title }} </template>
       <div>
-        <a-form ref="formRef" auto-label-width :layout="layoutMode.layout" :rules="rules" :model="addFrom">
+        <a-form ref="formRef" auto-label-width :layout="formLayout" :rules="rules" :model="addFrom">
           <a-form-item field="name" label="字典名称" validate-trigger="blur">
             <a-input v-model="addFrom.name" placeholder="请输入字典名称" allow-clear />
           </a-form-item>
@@ -106,7 +106,7 @@
       </div>
     </a-modal>
 
-    <a-modal :width="layoutMode.width" v-model:visible="detailOpen" @ok="detailOk" ok-text="关闭" :hide-cancel="true">
+    <a-modal :width="dialogWidth('50%')" v-model:visible="detailOpen" @ok="detailOk" ok-text="关闭" :hide-cancel="true">
       <template #title> 字典详情 </template>
       <div>
         <a-row>
@@ -146,7 +146,7 @@
                 <a-tag bordered size="small" color="red" v-else>禁用</a-tag>
               </template>
             </a-table-column>
-            <a-table-column title="操作" align="center" :width="200" :fixed="isMobile ? '' : 'right'">
+            <a-table-column title="操作" align="center" :width="200" :fixed="tableFixed">
               <template #cell="{ record }">
                 <a-space>
                   <a-button type="primary" size="mini" @click="onDetailUpdate(record)">
@@ -168,7 +168,7 @@
     </a-modal>
 
     <a-modal
-      :width="layoutMode.width"
+      :width="dialogWidth('30%')"
       v-model:visible="detailCaseOpen"
       @close="afterCloseDetail"
       @ok="handleOkDetail"
@@ -176,7 +176,7 @@
     >
       <template #title> {{ detailTitle }} </template>
       <div>
-        <a-form ref="detailFormRef" auto-label-width :layout="layoutMode.layout" :rules="detaulRules" :model="deatilForm">
+        <a-form ref="detailFormRef" auto-label-width :layout="formLayout" :rules="detaulRules" :model="deatilForm">
           <a-form-item field="name" label="字典名称" validate-trigger="blur">
             <a-input v-model="deatilForm.name" placeholder="请输入字典名称" allow-clear />
           </a-form-item>
@@ -198,23 +198,9 @@
 <script setup lang="ts">
 import { getDictAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
-import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
 
-const { isMobile } = useDevicesSize();
-const layoutMode = computed(() => {
-  let info = {
-    mobile: {
-      width: "95%",
-      layout: "vertical"
-    },
-    desktop: {
-      width: "50%",
-      layout: "horizontal"
-    }
-  };
-  return isMobile.value ? info.mobile : info.desktop;
-});
-
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const openState = ref(dictFilter("status"));
 const form = ref({
   name: "",
