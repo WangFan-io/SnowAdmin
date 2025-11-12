@@ -1,7 +1,7 @@
 <template>
   <div class="snow-page">
     <div class="snow-inner">
-      <a-space direction="vertical">
+      <a-space fill direction="vertical">
         <div class="player-box">
           <div id="mse"></div>
         </div>
@@ -14,6 +14,9 @@
 <script setup lang="ts">
 import Player from "xgplayer";
 import "xgplayer/dist/index.min.css";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
+
+const { isMobile } = useDevicesSize();
 
 onMounted(() => {
   new Player({
@@ -63,7 +66,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .player-box {
-  width: 600px;
+  width: v-bind('isMobile ? "100%" :  "600px"');
   height: 400px;
 }
 </style>
