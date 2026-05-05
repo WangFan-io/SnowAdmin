@@ -138,52 +138,83 @@ pnpm install
 
 ```text
 SnowAdmin
-├─ .husky                 # husky 配置文件
-├─ .vscode                # VSCode 推荐配置
-├─ build                  # vite项目配置目录
-├─ public                 # 静态资源文件（该文件夹不会被打包）
+├─ .github                  # GitHub 配置目录
+│  └─ ISSUE_TEMPLATE        # Issue 模板
+├─ .husky                   # husky 配置文件
+├─ build                    # vite 项目配置目录
+├─ node_modules             # 依赖包（自动生成）
+├─ public                   # 静态资源文件（不会被打包）
 ├─ src
-│  ├─ api                 # API 接口管理
-│  ├─ assets              # 静态资源文件
-│  ├─ components          # 全局组件
-│  ├─ config              # 全局配置项
-│  ├─ directives          # 全局自定义指令文件
-│  ├─ globals             # 全局函数
-│  ├─ hooks               # 常用 Hooks 封装
-│  ├─ lang                # 语言国际化 i18n
-│  ├─ layout              # 框架布局模块
-│  ├─ mock                # 本地数据mock
-│  ├─ router              # 路由管理
-│  ├─ store               # pinia store
-│  ├─ style               # 全局样式文件
-│  ├─ typings             # 全局 ts 声明
-│  ├─ utils               # 常用工具库
-│  ├─ views               # 项目所有页面
-│  ├─ App.vue             # 项目主组件
-│  ├─ main.ts             # 项目入口文件
-│  └─ vite-env.d.ts       # 指定 ts 识别 vue
-├─ .editorconfig          # 代码编辑器配置文件
-├─ .env                   # 通用环境配置
-├─ .env.development       # 开发环境配置
-├─ .env.production        # 生产环境配置
-├─ .env.test              # 测试环境配置
-├─ .eslintignore          # 忽略 Eslint 校验
-├─ .eslintrc.cjs          # Eslint 校验配置文件
-├─ .gitignore             # 忽略 git 提交
-├─ .prettierignore        # 忽略 Prettier 格式化
-├─ .prettierrc.cjs        # Prettier 格式化配置
-├─ .stylelintignore       # 忽略 Stylelint 校验
-├─ .stylelintrc.cjs       # Stylelint 格式化配置
-├─ commitlint.config.cjs  # git 提交规范配置
-├─ index.html             # 入口 html
-├─ LICENSE                # 开源协议
-├─ lint-staged.config.cjs # lint-staged 配置文件
-├─ package-lock.json      # 依赖包包版本锁
-├─ package.json           # 依赖包管理
-├─ pnpm-lock.yaml         # 依赖包包版本锁
-├─ README.md              # README 介绍
-├─ tsconfig.json          # typescript 全局配置
-└─ vite.config.ts         # vite 全局配置文件
+│  ├─ api                   # API 接口管理
+│  │  └─ modules            # 接口模块
+│  ├─ assets                # 静态资源文件
+│  │  ├─ fonts              # 字体文件
+│  │  ├─ img                # 图片资源
+│  │  ├─ logo               # Logo 图标
+│  │  └─ svgs               # SVG 图标
+│  ├─ components            # 全局组件（code-view/qrcode/svg-icon等）
+│  ├─ config                # 全局配置项
+│  ├─ directives            # 全局自定义指令（防抖/节流/权限指令）
+│  ├─ globals               # 全局函数
+│  ├─ hooks                 # 常用 Hooks 封装
+│  ├─ lang                  # 语言国际化 i18n
+│  ├─ layout                # 框架布局模块
+│  │  ├─ components         # 布局组件（Aside/Header/Footer/Menu/Tabs等）
+│  │  └─ layout-*           # 布局类型（defaults/head/mixing）
+│  ├─ mock                  # 本地数据 mock
+│  ├─ router                # 路由管理
+│  ├─ store                 # pinia store
+│  ├─ style                 # 全局样式文件
+│  │  ├─ media              # 响应式样式
+│  │  ├─ model              # 动画/滚动条/全局样式
+│  │  └─ var                # 主题变量
+│  ├─ typings               # 全局 ts 声明
+│  ├─ utils                 # 常用工具库
+│  ├─ views                 # 项目所有页面
+│  │  ├─ about              # 关于页面
+│  │  ├─ component          # 组件展示页
+│  │  ├─ directive          # 指令展示页
+│  │  ├─ error              # 错误页面（401/404/500）
+│  │  ├─ file               # 文件管理
+│  │  ├─ form               # 表单页
+│  │  ├─ functions          # 工具函数演示
+│  │  ├─ home               # 首页
+│  │  ├─ i18n               # 国际化演示
+│  │  ├─ link               # 链接演示
+│  │  ├─ login              # 登录页
+│  │  ├─ monitor            # 系统监控
+│  │  ├─ multilevel         # 多级菜单演示
+│  │  ├─ permission         # 权限演示
+│  │  ├─ personal           # 个人中心
+│  │  ├─ system             # 系统管理
+│  │  ├─ table              # 表格页
+│  │  └─ thin-preview       # 简洁预览页
+│  ├─ App.vue               # 项目主组件
+│  ├─ auto-import.d.ts      # 自动导入声明
+│  ├─ components.d.ts       # 组件声明
+│  ├─ main.ts               # 项目入口文件
+│  ├─ style.css             # 全局样式入口
+│  └─ vite-env.d.ts         # 指定 ts 识别 vue
+├─ .editorconfig            # 代码编辑器配置文件
+├─ .env                     # 通用环境配置
+├─ .env.development         # 开发环境配置
+├─ .env.production          # 生产环境配置
+├─ .env.test                # 测试环境配置
+├─ .eslintrc-auto-import.json # ESLint 自动导入配置
+├─ .gitignore               # 忽略 git 提交
+├─ .prettierignore          # 忽略 Prettier 格式化
+├─ .prettierrc.cjs          # Prettier 格式化配置
+├─ .stylelintignore         # 忽略 Stylelint 校验
+├─ .stylelintrc.cjs         # Stylelint 格式化配置
+├─ commitlint.config.cjs    # git 提交规范配置
+├─ eslint.config.js         # Eslint 校验配置文件
+├─ index.html               # 入口 html
+├─ LICENSE                  # 开源协议
+├─ lint-staged.config.cjs   # lint-staged 配置文件
+├─ package.json             # 依赖包管理
+├─ pnpm-lock.yaml           # 依赖包版本锁
+├─ README.md                # README 介绍
+└─ vite.config.ts           # vite 全局配置文件
 ```
 
 ### 浏览器支持 🌎
