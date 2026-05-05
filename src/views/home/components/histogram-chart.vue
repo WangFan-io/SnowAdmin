@@ -3,13 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import * as echarts from "echarts/core";
+import { use } from "echarts/core";
 import { TooltipComponent, GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import { useChart } from "@/hooks/useChart";
 
-echarts.use([TooltipComponent, GridComponent, BarChart, CanvasRenderer]);
+use([TooltipComponent, GridComponent, BarChart, CanvasRenderer]);
 
 // :update-options="{ notMerge: true }" 用于更新图表时，不合并配置项，避免theme覆盖自定义isDark配置
 // see: https://echarts.apache.org/zh/api.html#echartsInstance.setOption
