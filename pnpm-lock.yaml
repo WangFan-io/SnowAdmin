@@ -26,12 +26,6 @@ importers:
       '@fingerprintjs/fingerprintjs':
         specifier: ^4.6.2
         version: 4.6.2
-      '@visactor/vchart':
-        specifier: ^1.11.0
-        version: 1.13.10
-      '@visactor/vchart-arco-theme':
-        specifier: ^1.11.0
-        version: 1.12.2(@visactor/vchart@1.13.10)
       '@vueuse/core':
         specifier: ^12.4.0
         version: 12.8.2(typescript@5.8.3)
@@ -50,6 +44,9 @@ importers:
       driver.js:
         specifier: ^1.3.1
         version: 1.3.6
+      echarts:
+        specifier: ^6.0.0
+        version: 6.0.0
       fingerprintjs2:
         specifier: ^2.1.4
         version: 2.1.4
@@ -92,6 +89,9 @@ importers:
       vue-color-kit:
         specifier: ^1.0.6
         version: 1.0.6(vue@3.5.15(typescript@5.8.3))
+      vue-echarts:
+        specifier: ^8.0.1
+        version: 8.0.1(echarts@6.0.0)(vue@3.5.15(typescript@5.8.3))
       vue-i18n:
         specifier: 10.0.0-alpha.3
         version: 10.0.0-alpha.3(vue@3.5.15(typescript@5.8.3))
@@ -2175,6 +2175,9 @@ packages:
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
+
+  echarts@6.0.0:
+    resolution: {integrity: sha512-Tte/grDQRiETQP4xz3iZWSvoHrkCQtwqd6hs+mifXcjrCuo2iKWbajFObuLJVBlDIJlOzgQPd1hsaKt/3+OMkQ==}
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -4618,6 +4621,9 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
+  tslib@2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -4846,6 +4852,12 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-echarts@8.0.1:
+    resolution: {integrity: sha512-23rJTFLu1OUEGRWjJGmdGt8fP+8+ja1gVgzMYPIPaHWpXegcO1viIAaeu2H4QHESlVeHzUAHIxKXGrwjsyXAaA==}
+    peerDependencies:
+      echarts: ^6.0.0
+      vue: ^3.3.0
+
   vue-eslint-parser@10.2.0:
     resolution: {integrity: sha512-CydUvFOQKD928UzZhTp4pr2vWz1L+H99t7Pkln2QSPdvmURT0MoC4wUccfCnuEaihNsu9aYYyk+bep8rlfkUXw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -5009,6 +5021,9 @@ packages:
   yocto-queue@1.2.1:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
+
+  zrender@6.0.0:
+    resolution: {integrity: sha512-41dFXEEXuJpNecuUQq6JlbybmnHaqqpGlbH1yxnA5V9MMP4SbohSVZsJIwz+zdjQXSSlR1Vc34EgH1zxyTDvhg==}
 
 snapshots:
 
@@ -7144,6 +7159,11 @@ snapshots:
       call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
+
+  echarts@6.0.0:
+    dependencies:
+      tslib: 2.3.0
+      zrender: 6.0.0
 
   ee-first@1.1.1: {}
 
@@ -9389,6 +9409,7 @@ snapshots:
       axios: 1.9.0
       codemirror: 6.0.1
       driver.js: 1.3.6
+      echarts: 6.0.0
       fingerprintjs2: 2.1.4
       jsbarcode: 3.11.6
       nprogress: 0.2.0
@@ -9403,6 +9424,7 @@ snapshots:
       vue: 3.5.15(typescript@5.8.3)
       vue-codemirror6: 1.3.15(@popperjs/core@2.11.8)(core-js@3.42.0)(typescript@5.8.3)(vue@3.5.15(typescript@5.8.3))
       vue-color-kit: 1.0.6(vue@3.5.15(typescript@5.8.3))
+      vue-echarts: 8.0.1(echarts@6.0.0)(vue@3.5.15(typescript@5.8.3))
       vue-i18n: 10.0.0-alpha.3(vue@3.5.15(typescript@5.8.3))
       vue-pick-colors: 1.8.0(@popperjs/core@2.11.8)(vue@3.5.15(typescript@5.8.3))
       vue-router: 4.5.1(vue@3.5.15(typescript@5.8.3))
@@ -9775,6 +9797,8 @@ snapshots:
     dependencies:
       typescript: 5.8.3
 
+  tslib@2.3.0: {}
+
   tslib@2.8.1: {}
 
   type-check@0.4.0:
@@ -10036,6 +10060,11 @@ snapshots:
     dependencies:
       vue: 3.5.15(typescript@5.8.3)
 
+  vue-echarts@8.0.1(echarts@6.0.0)(vue@3.5.15(typescript@5.8.3)):
+    dependencies:
+      echarts: 6.0.0
+      vue: 3.5.15(typescript@5.8.3)
+
   vue-eslint-parser@10.2.0(eslint@9.27.0(jiti@2.4.2)):
     dependencies:
       debug: 4.4.3
@@ -10239,3 +10268,7 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.2.1: {}
+
+  zrender@6.0.0:
+    dependencies:
+      tslib: 2.3.0
