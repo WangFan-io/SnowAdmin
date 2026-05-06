@@ -34,7 +34,7 @@ const codeValue = computed({
     return props.codeJson;
   },
   set() {
-    // v-model需要set方法，但这里不做任何操作
+    // 空操作
   }
 });
 

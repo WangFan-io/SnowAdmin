@@ -194,9 +194,9 @@ import { deepClone } from "@/utils";
 import { useLayoutModel } from "@/hooks/useLayoutModel";
 
 const router = useRouter();
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const openState = ref(dictFilter("status"));
 const sexOption = ref(dictFilter("gender"));
-const { formLayout, tableFixed, dialogWidth } = useLayoutModel();
 const form = ref({
   name: "",
   phone: "",

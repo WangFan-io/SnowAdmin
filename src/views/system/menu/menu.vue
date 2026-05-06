@@ -336,7 +336,7 @@ import { useLayoutModel } from "@/hooks/useLayoutModel";
 
 const proxy = useGlobalProperties();
 const openState = ref(dictFilter("status"));
-const { formLayout, tableFixed, dialogWidth } = useLayoutModel();
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const form = ref({
   name: "",
   hide: "",

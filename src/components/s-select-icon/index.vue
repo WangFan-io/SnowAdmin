@@ -9,7 +9,14 @@
         <span class="icon-reset" @click="reset">重置</span>
       </template>
     </a-input>
-    <a-modal v-model:visible="visible" :unmount-on-close="true" width="70vw" :top="'50px'" :align-center="false" :footer="false">
+    <a-modal
+      v-model:visible="visible"
+      :unmount-on-close="true"
+      :width="dialogWidth('70vw')"
+      :top="'50px'"
+      :align-center="false"
+      :footer="false"
+    >
       <template #title> 请选择图标 </template>
       <a-input
         :style="{
@@ -47,6 +54,10 @@
 
 <script setup lang="ts">
 import * as ArcoIcons from "@arco-design/web-vue/es/icon";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
+
+const { dialogWidth } = useLayoutModel();
+
 interface Props {
   modelValue: string;
   type?: string;

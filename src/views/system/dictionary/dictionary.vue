@@ -200,8 +200,7 @@ import { getDictAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
 import { useLayoutModel } from "@/hooks/useLayoutModel";
 
-const { formLayout, tableFixed, dialogWidth } = useLayoutModel();
-
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const openState = ref(dictFilter("status"));
 const form = ref({
   name: "",
@@ -373,5 +372,3 @@ const selectAllDetail = (state: boolean) => {
 
 getDict();
 </script>
-
-<style lang="scss" scoped></style>

@@ -7,11 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: (typeof import("./components/s-layout-search/index copy.vue"))["default"]
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SBarcodeDraw: typeof import('./components/s-barcode-draw/index.vue')['default']
     SCodeView: typeof import('./components/s-code-view/index.vue')['default']
+    SEcharts: typeof import('./components/s-echarts/index.vue')['default']
     SExternalLinkPage: typeof import('./components/s-external-link-page/index.vue')['default']
     SFoldPage: typeof import('./components/s-fold-page/index.vue')['default']
     SFullPage: typeof import('./components/s-full-page/index.vue')['default']

@@ -157,7 +157,7 @@ import { deepClone } from "@/utils";
 import { getDivisionAPI } from "@/api/modules/system/index";
 import { useLayoutModel } from "@/hooks/useLayoutModel";
 
-const { formLayout, tableFixed, dialogWidth } = useLayoutModel();
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 
 // 新增
 const open = ref(false);

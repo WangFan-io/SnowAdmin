@@ -148,7 +148,7 @@ defineOptions({ name: "crontab" });
 
 const router = useRouter();
 const openState = ref(dictFilter("status"));
-const { formLayout, tableFixed, dialogWidth } = useLayoutModel();
+const { dialogWidth, formLayout, tableFixed } = useLayoutModel();
 const misfirePolicyOption = ref([
   { name: "循环", value: 1 },
   { name: "执行一次", value: 2 }

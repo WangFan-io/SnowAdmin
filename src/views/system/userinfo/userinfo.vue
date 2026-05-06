@@ -15,7 +15,7 @@
           </a-col>
           <a-col :span="isMobile ? 24 : 22">
             <a-space direction="vertical" size="large">
-              <a-descriptions :data="detail" :column="isMobile ? 1 : 4" title="用户资料" :align="{ label: 'right' }">
+              <a-descriptions :data="detail" :column="descriptionsColumn(1, 4)" title="用户资料" :align="{ label: 'right' }">
                 <template #value="{ value, data }">
                   <span v-if="data.key === 'roles'">
                     {{ Array.isArray(value) && value.map((curr: any) => curr.name).join(",") }}
@@ -56,6 +56,7 @@ import BasicInfo from "@/views/system/userinfo/components/basic-info.vue";
 import SecuritySettings from "@/views/system/userinfo/components/security-settings.vue";
 import useGlobalProperties from "@/hooks/useGlobalProperties";
 import { useDevicesSize } from "@/hooks/useDevicesSize";
+import { useLayoutModel } from "@/hooks/useLayoutModel";
 import { getUserInfoAPI } from "@/api/modules/user/index";
 import { useRouteConfigStore } from "@/store/modules/route-config";
 
@@ -63,6 +64,7 @@ const route = useRoute();
 const proxy = useGlobalProperties();
 const routerStore = useRouteConfigStore();
 const { isMobile } = useDevicesSize();
+const { descriptionsColumn } = useLayoutModel();
 interface Detail {
   key: string;
   label: string;
