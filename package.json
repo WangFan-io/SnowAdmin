@@ -75,7 +75,7 @@
     "@types/node": "^22.13.11",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
-    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue": "^6.0.1",
     "commitlint": "^19.2.1",
     "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.1",
