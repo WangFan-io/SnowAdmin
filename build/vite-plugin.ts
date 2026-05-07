@@ -7,7 +7,7 @@ import AutoImport from "unplugin-auto-import/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
 import { viteMockServe } from "vite-plugin-mock";
-import eslintPlugin from "vite-plugin-eslint";
+import eslintPlugin from "@nabla/vite-plugin-eslint";
 /**
  * 创建 vite 插件
  * @param viteEnv
@@ -16,7 +16,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
   const env = viteEnv;
   return [
     vue(),
-    // esLint 报错信息显示在浏览器界面上
+    // 将 ESLint 集成到 Vite 开发服务器中，通过控制台日志显示结果
     eslintPlugin(),
     vitePluginForArco({
       style: "css"
