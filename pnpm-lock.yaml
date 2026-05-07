@@ -123,6 +123,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.8.0
         version: 19.8.1
+      '@nabla/vite-plugin-eslint':
+        specifier: ^3.0.1
+        version: 3.0.1(eslint@9.27.0(jiti@2.4.2))(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))
       '@types/node':
         specifier: ^22.13.11
         version: 22.15.21
@@ -133,8 +136,8 @@ importers:
         specifier: ^8.32.1
         version: 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       '@vitejs/plugin-vue':
-        specifier: ^5.2.1
-        version: 5.2.4(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))(vue@3.5.15(typescript@5.8.3))
+        specifier: ^6.0.1
+        version: 6.0.1(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))(vue@3.5.15(typescript@5.8.3))
       commitlint:
         specifier: ^19.2.1
         version: 19.8.1(@types/node@22.15.21)(typescript@5.8.3)
@@ -219,9 +222,6 @@ importers:
       vite:
         specifier: ^7.1.5
         version: 7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)
-      vite-plugin-eslint:
-        specifier: ^1.8.1
-        version: 1.8.1(eslint@9.27.0(jiti@2.4.2))(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))
       vite-plugin-mock:
         specifier: ^2.9.6
         version: 2.9.8(mockjs@1.1.0)(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))
@@ -949,6 +949,12 @@ packages:
   '@marijn/find-cluster-break@1.0.2':
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
 
+  '@nabla/vite-plugin-eslint@3.0.1':
+    resolution: {integrity: sha512-iN7WF0izOiPhJaOGzKaNzGEvBSX5WuHA2eRPqo+cGfTsWd/DTWCAur0Jkm/8Fq0sqIB48RTOO3T+VFfRaCIt/w==}
+    peerDependencies:
+      eslint: ^9 || ^10
+      vite: ^4 || ^5 || ^6 || ^7 || ^8
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -968,9 +974,8 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@rollup/pluginutils@4.2.1':
-    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
-    engines: {node: '>= 8.0.0'}
+  '@rolldown/pluginutils@1.0.0-beta.29':
+    resolution: {integrity: sha512-NIJgOsMjbxAXvoGq/X0gD7VPMQ8j9g0BiDaNjVNVjvl+iKXxL3Jre0v31RmBYeLEmkbj2s02v8vFTbUXi5XS2Q==}
 
   '@rollup/pluginutils@5.1.4':
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
@@ -1223,11 +1228,11 @@ packages:
     peerDependencies:
       '@uppy/core': ^2.3.3
 
-  '@vitejs/plugin-vue@5.2.4':
-    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
+  '@vitejs/plugin-vue@6.0.1':
+    resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^5.0.0 || ^6.0.0
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0
       vue: ^3.2.25
 
   '@volar/language-core@2.4.14':
@@ -3742,11 +3747,6 @@ packages:
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
 
-  rollup@2.79.2:
-    resolution: {integrity: sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-
   rollup@4.60.2:
     resolution: {integrity: sha512-J9qZyW++QK/09NyN/zeO0dG/1GdGfyp9lV8ajHnRVLfo/uFsbji5mHnDgn/qYdUHyCkM2N+8VyspgZclfAh0eQ==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -4445,12 +4445,6 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
-
-  vite-plugin-eslint@1.8.1:
-    resolution: {integrity: sha512-PqdMf3Y2fLO9FsNPmMX+//2BF5SF8nEWspZdgl4kSt7UvHDRHVVfHvxsD7ULYzZrJDGRxR81Nq7TOFgwMnUang==}
-    peerDependencies:
-      eslint: '>=7'
-      vite: '>=2'
 
   vite-plugin-mock@2.9.8:
     resolution: {integrity: sha512-YTQM5Sn7t+/DNOwTkr+W26QGTCk1PrDkhGHslTJ90lIPJhJtDTwuSkEYMAuLP9TcVQ/qExTFx/x/GE3kxJ05sw==}
@@ -5466,6 +5460,16 @@ snapshots:
 
   '@marijn/find-cluster-break@1.0.2': {}
 
+  '@nabla/vite-plugin-eslint@3.0.1(eslint@9.27.0(jiti@2.4.2))(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))':
+    dependencies:
+      '@types/eslint': 8.56.12
+      chalk: 4.1.2
+      debug: 4.4.3
+      eslint: 9.27.0(jiti@2.4.2)
+      vite: 7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -5482,14 +5486,11 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@rollup/pluginutils@4.2.1':
-    dependencies:
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
+  '@rolldown/pluginutils@1.0.0-beta.29': {}
 
   '@rollup/pluginutils@5.1.4(rollup@4.60.2)':
     dependencies:
-      '@types/estree': 1.0.7
+      '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.2
     optionalDependencies:
@@ -5580,7 +5581,7 @@ snapshots:
 
   '@types/eslint@8.56.12':
     dependencies:
-      '@types/estree': 1.0.7
+      '@types/estree': 1.0.8
       '@types/json-schema': 7.0.15
 
   '@types/estree@1.0.7': {}
@@ -5711,8 +5712,9 @@ snapshots:
       '@uppy/utils': 4.1.3
       nanoid: 3.3.11
 
-  '@vitejs/plugin-vue@5.2.4(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))(vue@3.5.15(typescript@5.8.3))':
+  '@vitejs/plugin-vue@6.0.1(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0))(vue@3.5.15(typescript@5.8.3))':
     dependencies:
+      '@rolldown/pluginutils': 1.0.0-beta.29
       vite: 7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)
       vue: 3.5.15(typescript@5.8.3)
 
@@ -6932,7 +6934,7 @@ snapshots:
 
   estree-walker@3.0.3:
     dependencies:
-      '@types/estree': 1.0.7
+      '@types/estree': 1.0.8
 
   esutils@2.0.3: {}
 
@@ -8387,10 +8389,6 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-  rollup@2.79.2:
-    optionalDependencies:
-      fsevents: 2.3.3
-
   rollup@4.60.2:
     dependencies:
       '@types/estree': 1.0.8
@@ -9246,14 +9244,6 @@ snapshots:
   varint@6.0.0: {}
 
   vary@1.1.2: {}
-
-  vite-plugin-eslint@1.8.1(eslint@9.27.0(jiti@2.4.2))(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)):
-    dependencies:
-      '@rollup/pluginutils': 4.2.1
-      '@types/eslint': 8.56.12
-      eslint: 9.27.0(jiti@2.4.2)
-      rollup: 2.79.2
-      vite: 7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)
 
   vite-plugin-mock@2.9.8(mockjs@1.1.0)(vite@7.1.5(@types/node@22.15.21)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(yaml@2.8.0)):
     dependencies:
