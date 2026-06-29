@@ -2,45 +2,45 @@
   <div class="snow-fill">
     <div class="snow-fill-inner container">
       <div class="left-box">
-        <a-input placeholder="请输入部门名称">
-          <template #prefix>
-            <icon-search />
+        <t-input placeholder="请输入部门名称">
+          <template #prefixIcon>
+            <search-icon :style="{ cursor: 'pointer' }" />
           </template>
-        </a-input>
+        </t-input>
         <div class="tree-box">
-          <a-tree ref="treeRef" :field-names="fieldNames" :data="treeData" show-line @select="onSelectTree"> </a-tree>
+          <t-tree activable hover transition expandAll :line="true" :data="treeData" :keys="fieldNames" @active="onSelectTree" />
         </div>
       </div>
       <div class="right-box">
-        <a-space wrap>
-          <a-input v-model="form.name" placeholder="请输入用户名称" allow-clear />
-          <a-input v-model="form.phone" placeholder="请输入手机号码" allow-clear />
-          <a-select placeholder="用户状态" v-model="form.status" style="width: 120px" allow-clear>
-            <a-option v-for="item in openState" :key="item.value" :value="item.value">{{ item.name }}</a-option>
-          </a-select>
-          <a-range-picker v-model="form.createTime" show-time format="YYYY-MM-DD HH:mm" allow-clear />
-          <a-button type="primary" @click="search">
+        <t-space :breakLine="true">
+          <t-input v-model="form.name" placeholder="请输入用户名称" clearable style="width: 220px" />
+          <t-input v-model="form.phone" placeholder="请输入手机号码" clearable style="width: 220px" />
+          <t-select v-model="form.status" placeholder="用户状态" clearable style="width: 120px" :auto-width="false">
+            <t-option v-for="item in openState" :key="item.value" :value="item.value" :label="item.name"></t-option>
+          </t-select>
+          <t-date-range-picker v-model="form.createTime" enable-time-picker format="YYYY-MM-DD HH:mm" clearable />
+          <t-button theme="primary" @click="search">
             <template #icon><icon-search /></template>
             <span>查询</span>
-          </a-button>
-          <a-button @click="reset">
+          </t-button>
+          <t-button theme="default" @click="reset">
             <template #icon><icon-refresh /></template>
             <span>重置</span>
-          </a-button>
-        </a-space>
+          </t-button>
+        </t-space>
 
-        <a-row>
-          <a-space wrap>
-            <a-button type="primary" @click="onAdd">
+        <t-row>
+          <t-space :breakLine="true">
+            <t-button theme="primary" @click="onAdd">
               <template #icon><icon-plus /></template>
               <span>新增</span>
-            </a-button>
-            <a-button type="primary" status="danger">
+            </t-button>
+            <t-button theme="danger">
               <template #icon><icon-delete /></template>
               <span>删除</span>
-            </a-button>
-          </a-space>
-        </a-row>
+            </t-button>
+          </t-space>
+        </t-row>
 
         <a-table
           row-key="id"
@@ -178,7 +178,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
+import { SearchIcon } from "tdesign-icons-vue-next";
 import { getDivisionAPI, getAccountAPI, getRoleAPI } from "@/api/modules/system/index";
 import { deepClone } from "@/utils";
 
@@ -187,7 +188,7 @@ const openState = ref(dictFilter("status"));
 const form = ref({
   name: "",
   phone: "",
-  status: null,
+  status: "",
   createTime: []
 });
 const search = () => {
@@ -197,7 +198,7 @@ const reset = () => {
   form.value = {
     name: "",
     phone: "",
-    status: null,
+    status: "",
     createTime: []
   };
   getAccount();
@@ -306,7 +307,6 @@ const pagination = ref({
   pageSize: 10,
   showPageSize: true
 });
-
 // 账户
 const accountList = ref();
 const getAccount = async () => {
@@ -314,6 +314,7 @@ const getAccount = async () => {
   let res = await getAccountAPI();
   res.data.forEach((item: any) => item.admin && (item.disabled = true));
   accountList.value = res.data;
+  console.log("列表", res.data);
   loading.value = false;
 };
 const selectedKeys = ref([]);
@@ -326,20 +327,18 @@ const selectAll = (state: boolean) => {
 
 // 部门树
 const fieldNames = ref({
-  key: "id",
-  title: "name",
+  value: "id",
+  label: "name",
   children: "children"
 });
 const treeData = ref();
-const treeRef = ref();
 const getDivision = async () => {
   let res = await getDivisionAPI();
   treeData.value = res.data;
-  setTimeout(() => {
-    treeRef.value.expandAll();
-  }, 0);
 };
+
 const onSelectTree = () => {
+  console.log("走");
   getAccount();
 };
 
@@ -373,7 +372,10 @@ onMounted(() => {
     }
   }
   .right-box {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: $padding;
   }
 }
 </style>

@@ -14,7 +14,7 @@
             <Breadcrumb v-if="!isPc" />
           </div>
           <div class="header-nav-center" v-if="isPc">
-            <t-head-menu v-model="selectedMenu" theme="light" @change="onMenuItem">
+            <t-head-menu expand-type="popup" v-model="selectedMenu" theme="light" @change="onMenuItem">
               <template v-for="item in routeTree" :key="item.path">
                 <t-menu-item v-if="!item.meta.hide" :key="item.path" :value="item.path">
                   <template #icon v-if="item.meta.svgIcon || item.meta.icon">

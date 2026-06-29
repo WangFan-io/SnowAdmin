@@ -1,7 +1,7 @@
 <template>
   <div class="tabs">
     <div class="tabs-chunk">
-      <t-tabs :value="currentRoute.path" scroll-position="auto" theme="normal" @change="onTabs" @remove="onDelete">
+      <t-tabs :value="currentRoute.path" scroll-position="auto" theme="normal" @change="onTabs" @remove="onDeleteTab">
         <t-tab-panel v-for="item of tabsList" :key="item.path" :value="item.path" :removable="!item.meta.affix">
           <template #label>{{ $t(`menu.${item.meta.title}`) }}</template>
         </t-tab-panel>
@@ -62,12 +62,17 @@ const onTabs = (key: any) => {
   router.push(key);
 };
 
+// 标签页上的删除
+const onDeleteTab: TabsProps["onRemove"] = ({ value }) => {
+  onDelete(value as string);
+};
+
 // 删除标签页，如果是当前页则跳转到最后一个标签页
-const onDelete: TabsProps["onRemove"] = ({ value }) => {
-  routerStore.removeTabsList(value);
-  routerStore.removeRouteName(value);
+const onDelete = (path: string) => {
+  routerStore.removeTabsList(path);
+  routerStore.removeRouteName(path);
   if (tabsList.value.length == 0) return;
-  if (currentRoute.value.path != value) return;
+  if (currentRoute.value.path != path) return;
   router.push(tabsList.value.at(-1).path);
 };
 

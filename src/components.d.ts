@@ -34,8 +34,11 @@ declare module "vue" {
     TBreadcrumbItem: (typeof import("tdesign-vue-next"))["BreadcrumbItem"];
     TButton: (typeof import("tdesign-vue-next"))["Button"];
     TCheckbox: (typeof import("tdesign-vue-next"))["Checkbox"];
+    TCol: (typeof import("tdesign-vue-next"))["Col"];
     TColorPicker: (typeof import("tdesign-vue-next"))["ColorPicker"];
     TContent: (typeof import("tdesign-vue-next"))["Content"];
+    TDateRangePicker: (typeof import("tdesign-vue-next"))["DateRangePicker"];
+    TDialog: (typeof import("tdesign-vue-next"))["Dialog"];
     TDivider: (typeof import("tdesign-vue-next"))["Divider"];
     TDrawer: (typeof import("tdesign-vue-next"))["Drawer"];
     TDropdown: (typeof import("tdesign-vue-next"))["Dropdown"];
@@ -50,17 +53,26 @@ declare module "vue" {
     TImage: (typeof import("tdesign-vue-next"))["Image"];
     TInput: (typeof import("tdesign-vue-next"))["Input"];
     TLayout: (typeof import("tdesign-vue-next"))["Layout"];
+    TLink: (typeof import("tdesign-vue-next"))["Link"];
     TMenu: (typeof import("tdesign-vue-next"))["Menu"];
     TMenuItem: (typeof import("tdesign-vue-next"))["MenuItem"];
     TOption: (typeof import("tdesign-vue-next"))["Option"];
+    TPopconfirm: (typeof import("tdesign-vue-next"))["Popconfirm"];
     TPopup: (typeof import("tdesign-vue-next"))["Popup"];
+    TRow: (typeof import("tdesign-vue-next"))["Row"];
     TSelect: (typeof import("tdesign-vue-next"))["Select"];
     TSlider: (typeof import("tdesign-vue-next"))["Slider"];
     TSpace: (typeof import("tdesign-vue-next"))["Space"];
     TSubmenu: (typeof import("tdesign-vue-next"))["Submenu"];
     TSwitch: (typeof import("tdesign-vue-next"))["Switch"];
+    TTable: (typeof import("tdesign-vue-next"))["Table"];
     TTabPanel: (typeof import("tdesign-vue-next"))["TabPanel"];
     TTabs: (typeof import("tdesign-vue-next"))["Tabs"];
+    TTag: (typeof import("tdesign-vue-next"))["Tag"];
+    TTextarea: (typeof import("tdesign-vue-next"))["Textarea"];
     TTooltip: (typeof import("tdesign-vue-next"))["Tooltip"];
+    TTree: (typeof import("tdesign-vue-next"))["Tree"];
+    TTreeSelect: (typeof import("tdesign-vue-next"))["TreeSelect"];
+    TWatermark: (typeof import("tdesign-vue-next"))["Watermark"];
   }
 }

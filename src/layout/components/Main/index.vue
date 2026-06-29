@@ -1,15 +1,4 @@
 <template>
-  <!-- <a-watermark :content="watermark" v-bind="watermarkConfig">
-    <a-layout-content class="layout-main-content">
-      <router-view v-slot="{ Component, route }">
-        <s-main-transition>
-          <keep-alive :include="cacheRoutes">
-            <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" v-if="refreshPage" />
-          </keep-alive>
-        </s-main-transition>
-      </router-view>
-    </a-layout-content>
-  </a-watermark> -->
   <t-content class="layout-main-content">
     <router-view v-slot="{ Component, route }">
       <s-main-transition>
@@ -22,12 +11,11 @@
 </template>
 
 <script setup lang="ts">
-// import Tabs from "@/layout/components/Tabs/index.vue";
 import { storeToRefs } from "pinia";
 import { useThemeConfig } from "@/store/modules/theme-config";
 import { useRouteConfigStore } from "@/store/modules/route-config";
 const themeStore = useThemeConfig();
-let { refreshPage, isTabs, watermark, watermarkStyle, watermarkRotate, watermarkGap } = storeToRefs(themeStore);
+let { refreshPage } = storeToRefs(themeStore);
 const routerStore = useRouteConfigStore();
 const { cacheRoutes } = storeToRefs(routerStore);
 
@@ -43,19 +31,6 @@ const createComponentWrapper = (component: any, route: any) => {
   }
   return h(wrapper);
 };
-
-// 水印配置
-const watermarkConfig = computed(() => {
-  return {
-    font: watermarkStyle.value,
-    rotate: watermarkRotate.value,
-    gap: watermarkGap.value
-  };
-});
-
-watch(watermarkConfig, newv => {
-  console.log(newv);
-});
 </script>
 
 <style lang="scss" scoped>
