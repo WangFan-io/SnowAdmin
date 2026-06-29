@@ -35,146 +35,126 @@
               <template #icon><icon-plus /></template>
               <span>新增</span>
             </t-button>
-            <t-button theme="danger">
+            <t-button theme="danger" @click="onBatchDelete">
               <template #icon><icon-delete /></template>
               <span>删除</span>
             </t-button>
           </t-space>
         </t-row>
 
-        <a-table
+        <t-table
           row-key="id"
           :data="accountList"
-          :bordered="{ cell: true }"
+          :bordered="true"
           :loading="loading"
-          :scroll="{ x: '120%', y: '100%' }"
+          :max-height="'100%'"
           :pagination="pagination"
-          :row-selection="{ type: 'checkbox', showCheckedAll: true }"
-          :selected-keys="selectedKeys"
-          @select="select"
-          @select-all="selectAll"
+          :selected-row-keys="selectedKeys"
+          :columns="columns"
+          @select-change="onSelectChange"
         >
-          <template #columns>
-            <a-table-column title="序号" :width="64">
-              <template #cell="cell">{{ cell.rowIndex + 1 }}</template>
-            </a-table-column>
-            <a-table-column title="用户名称" data-index="userName"></a-table-column>
-            <a-table-column title="昵称" data-index="nickName"></a-table-column>
-            <a-table-column title="性别" data-index="sex" align="center">
-              <template #cell="{ record }">
-                <a-tag bordered size="small" color="arcoblue" v-if="record.sex == 1">男</a-tag>
-                <a-tag bordered size="small" color="red" v-else-if="record.sex == 0">女</a-tag>
-                <a-tag bordered size="small" v-else>未知</a-tag>
-              </template>
-            </a-table-column>
-            <a-table-column title="部门" data-index="deptName"></a-table-column>
-            <a-table-column title="手机号" data-index="phone" :width="180"></a-table-column>
-            <a-table-column title="状态" :width="100" align="center">
-              <template #cell="{ record }">
-                <a-tag bordered size="small" color="arcoblue" v-if="record.status === 1">启用</a-tag>
-                <a-tag bordered size="small" color="red" v-else>禁用</a-tag>
-              </template>
-            </a-table-column>
-            <a-table-column title="描述" data-index="description" :ellipsis="true" :tooltip="true"></a-table-column>
-            <a-table-column title="创建时间" data-index="createTime" :width="180"></a-table-column>
-            <a-table-column title="操作" :width="200" align="center" :fixed="'right'">
-              <template #cell="{ record }">
-                <a-space>
-                  <a-button type="primary" size="mini" @click="onUpdate(record)">
-                    <template #icon><icon-edit /></template>
-                    <span>修改</span>
-                  </a-button>
-                  <a-popconfirm type="warning" content="确定删除该账号吗?">
-                    <a-button type="primary" status="danger" size="mini" :disabled="record.admin">
-                      <template #icon><icon-delete /></template>
-                      <span>删除</span>
-                    </a-button>
-                  </a-popconfirm>
-                  <a-tooltip content="用户详情">
-                    <a-button type="primary" status="success" size="mini" @click="onDetail(record)">
-                      <template #icon>
-                        <icon-more />
-                      </template>
-                    </a-button>
-                  </a-tooltip>
-                </a-space>
-              </template>
-            </a-table-column>
+          <template #sexCell="{ row }">
+            <t-tag theme="primary" variant="light" v-if="row.sex == 1">男</t-tag>
+            <t-tag theme="danger" variant="light" v-else-if="row.sex == 0">女</t-tag>
+            <t-tag variant="light" v-else>未知</t-tag>
           </template>
-        </a-table>
+          <template #statusCell="{ row }">
+            <t-tag theme="primary" variant="light" v-if="row.status === 1">启用</t-tag>
+            <t-tag theme="danger" variant="light" v-else>禁用</t-tag>
+          </template>
+          <template #operationCell="{ row }">
+            <t-space>
+              <t-button theme="primary" size="small" @click="onUpdate(row)">
+                <template #icon><icon-edit /></template>
+                <span>修改</span>
+              </t-button>
+              <t-popconfirm content="确定删除该账号吗?" theme="warning">
+                <t-button theme="danger" size="small" :disabled="row.admin">
+                  <template #icon><icon-delete /></template>
+                  <span>删除</span>
+                </t-button>
+              </t-popconfirm>
+              <t-tooltip content="用户详情">
+                <t-button theme="success" size="small" @click="onDetail(row)">
+                  <template #icon>
+                    <icon-more />
+                  </template>
+                </t-button>
+              </t-tooltip>
+            </t-space>
+          </template>
+        </t-table>
       </div>
     </div>
 
-    <a-modal width="40%" v-model:visible="open" @close="afterClose" @ok="handleOk" @cancel="afterClose">
-      <template #title> {{ title }} </template>
-      <div>
-        <a-form ref="formRef" auto-label-width :rules="rules" :model="addFrom">
-          <a-row>
-            <a-col :span="12">
-              <a-form-item field="userName" label="用户名称" validate-trigger="blur">
-                <a-input v-model="addFrom.userName" placeholder="请输入用户名称" allow-clear />
-              </a-form-item>
-            </a-col>
-            <a-col :span="12">
-              <a-form-item field="nickName" label="昵称" validate-trigger="blur">
-                <a-input v-model="addFrom.nickName" placeholder="请输入昵称" allow-clear />
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="12">
-              <a-form-item field="phone" label="手机号码" validate-trigger="blur">
-                <a-input v-model="addFrom.phone" placeholder="请输入手机号码" allow-clear />
-              </a-form-item>
-            </a-col>
-            <a-col :span="12">
-              <a-form-item field="email" label="邮箱" validate-trigger="blur">
-                <a-input v-model="addFrom.email" placeholder="请输入邮箱" allow-clear />
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="12">
-              <a-form-item field="phone" label="手机号码" validate-trigger="blur">
-                <a-input v-model="addFrom.phone" placeholder="请输入手机号码" allow-clear />
-              </a-form-item>
-            </a-col>
-          </a-row>
-          <a-form-item field="deptId" label="所属部门" validate-trigger="blur">
-            <a-tree-select
-              v-model="addFrom.deptId"
-              :data="treeData"
-              :field-names="{
-                key: 'id',
-                title: 'name',
-                children: 'children'
-              }"
-              placeholder="请选择所属部门"
-            ></a-tree-select>
-          </a-form-item>
-          <a-form-item field="roles" label="角色" validate-trigger="blur">
-            <a-select v-model="addFrom.roles" multiple placeholder="请选择角色">
-              <a-option
-                v-for="item in roleList"
-                :key="item.code"
-                :value="item.code"
-                :label="item.name"
-                :disabled="item.admin"
-              ></a-option>
-            </a-select>
-          </a-form-item>
-          <a-form-item field="status" label="状态" validate-trigger="blur">
-            <a-switch type="round" :checked-value="1" :unchecked-value="0" v-model="addFrom.status">
-              <template #checked> 启用 </template>
-              <template #unchecked> 禁用 </template>
-            </a-switch>
-          </a-form-item>
-          <a-form-item field="description" label="描述" validate-trigger="blur">
-            <a-textarea v-model="addFrom.description" placeholder="请输入描述" allow-clear />
-          </a-form-item>
-        </a-form>
-      </div>
-    </a-modal>
+    <t-dialog width="40%" v-model:visible="open" :header="title" class="account-dialog" @close="afterClose" @confirm="handleOk">
+      <t-form ref="formRef" label-align="right" :rules="rules" :data="addFrom">
+        <t-row :gutter="16">
+          <t-col :span="6">
+            <t-form-item name="userName" label="用户名称">
+              <t-input v-model="addFrom.userName" placeholder="请输入用户名称" clearable />
+            </t-form-item>
+          </t-col>
+          <t-col :span="6">
+            <t-form-item name="nickName" label="昵称">
+              <t-input v-model="addFrom.nickName" placeholder="请输入昵称" clearable />
+            </t-form-item>
+          </t-col>
+        </t-row>
+        <t-row :gutter="16">
+          <t-col :span="6">
+            <t-form-item name="phone" label="手机号码">
+              <t-input v-model="addFrom.phone" placeholder="请输入手机号码" clearable />
+            </t-form-item>
+          </t-col>
+          <t-col :span="6">
+            <t-form-item name="email" label="邮箱">
+              <t-input v-model="addFrom.email" placeholder="请输入邮箱" clearable />
+            </t-form-item>
+          </t-col>
+        </t-row>
+        <t-row :gutter="16">
+          <t-col :span="6">
+            <t-form-item name="sex" label="性别">
+              <t-radio-group v-model="addFrom.sex">
+                <t-radio :value="1">男</t-radio>
+                <t-radio :value="0">女</t-radio>
+                <t-radio :value="2">未知</t-radio>
+              </t-radio-group>
+            </t-form-item>
+          </t-col>
+        </t-row>
+        <t-form-item name="deptId" label="所属部门">
+          <t-tree-select
+            v-model="addFrom.deptId"
+            :data="treeData"
+            :tree-props="{
+              keys: { value: 'id', label: 'name', children: 'children' }
+            }"
+            placeholder="请选择所属部门"
+          ></t-tree-select>
+        </t-form-item>
+        <t-form-item name="roles" label="角色">
+          <t-select v-model="addFrom.roles" multiple placeholder="请选择角色">
+            <t-option
+              v-for="item in roleList"
+              :key="item.code"
+              :value="item.code"
+              :label="item.name"
+              :disabled="item.admin"
+            ></t-option>
+          </t-select>
+        </t-form-item>
+        <t-form-item name="status" label="状态">
+          <t-switch v-model="addFrom.status" :custom-value="[1, 0]">
+            <template #label="slotProps">{{ slotProps.value === 1 ? "启用" : "禁用" }}</template>
+          </t-switch>
+        </t-form-item>
+        <t-form-item name="description" label="描述">
+          <t-textarea v-model="addFrom.description" placeholder="请输入描述" autosize />
+        </t-form-item>
+      </t-form>
+    </t-dialog>
   </div>
 </template>
 
@@ -263,14 +243,15 @@ const onAdd = () => {
   open.value = true;
 };
 const handleOk = async () => {
-  let state = await formRef.value.validate();
-  if (state) return (open.value = true); // 校验不通过
+  const result = await formRef.value.validate();
+  if (result.validateResult !== true) return; // 校验不通过
   arcoMessage("success", "模拟提交成功");
+  open.value = false;
   getAccount();
 };
 // 关闭对话框动画结束后触发
 const afterClose = () => {
-  formRef.value.resetFields();
+  formRef.value.reset();
   addFrom.value = {
     userName: "",
     nickName: "",
@@ -304,9 +285,75 @@ const onDetail = (row: any) => {
 
 const loading = ref(false);
 const pagination = ref({
+  current: 1,
   pageSize: 10,
+  total: 0,
   showPageSize: true
 });
+const columns: any = ref([
+  {
+    colKey: "selection",
+    type: "multiple" as const,
+    width: 50,
+    checkProps: ({ row }: any) => ({ disabled: row.disabled === true })
+  },
+  {
+    title: "序号",
+    colKey: "index",
+    width: 64,
+    cell: (h: any, { rowIndex }: any) => {
+      return h("span", rowIndex + 1);
+    }
+  },
+  {
+    title: "用户名称",
+    colKey: "userName"
+  },
+  {
+    title: "昵称",
+    colKey: "nickName"
+  },
+  {
+    title: "性别",
+    colKey: "sex",
+    align: "center" as const,
+    cell: "sexCell"
+  },
+  {
+    title: "部门",
+    colKey: "deptName"
+  },
+  {
+    title: "手机号",
+    colKey: "phone",
+    width: 180
+  },
+  {
+    title: "状态",
+    colKey: "status",
+    width: 100,
+    align: "center" as const,
+    cell: "statusCell"
+  },
+  {
+    title: "描述",
+    colKey: "description",
+    ellipsis: true
+  },
+  {
+    title: "创建时间",
+    colKey: "createTime",
+    width: 180
+  },
+  {
+    title: "操作",
+    colKey: "operation",
+    width: 200,
+    align: "center" as const,
+    fixed: "right" as const,
+    cell: "operationCell"
+  }
+]);
 // 账户
 const accountList = ref();
 const getAccount = async () => {
@@ -314,15 +361,16 @@ const getAccount = async () => {
   let res = await getAccountAPI();
   res.data.forEach((item: any) => item.admin && (item.disabled = true));
   accountList.value = res.data;
-  console.log("列表", res.data);
+  pagination.value.total = res.data.length;
   loading.value = false;
 };
-const selectedKeys = ref([]);
-const select = (list: []) => {
-  selectedKeys.value = list;
+const selectedKeys = ref<(string | number)[]>([]);
+const onSelectChange = (keys: (string | number)[]) => {
+  selectedKeys.value = keys;
 };
-const selectAll = (state: boolean) => {
-  selectedKeys.value = state ? (accountList.value.map((el: any) => el.id) as []) : [];
+const onBatchDelete = () => {
+  const selectedData = accountList.value.filter((item: any) => selectedKeys.value.includes(item.id));
+  console.log("勾选的数据:", selectedData);
 };
 
 // 部门树
@@ -338,7 +386,6 @@ const getDivision = async () => {
 };
 
 const onSelectTree = () => {
-  console.log("走");
   getAccount();
 };
 
@@ -376,6 +423,14 @@ onMounted(() => {
     flex: 1;
     flex-direction: column;
     gap: $padding;
+  }
+}
+</style>
+
+<style lang="scss">
+.account-dialog {
+  .t-dialog__body {
+    overflow-x: hidden;
   }
 }
 </style>

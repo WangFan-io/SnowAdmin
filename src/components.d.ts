@@ -28,11 +28,13 @@ declare module "vue" {
     SSvgAndIcon: (typeof import("./components/s-svg-and-icon/index.vue"))["default"];
     SSvgIcon: (typeof import("./components/s-svg-icon/index.vue"))["default"];
     SVerifyCode: (typeof import("./components/s-verify-code/index.vue"))["default"];
+    TAlert: (typeof import("tdesign-vue-next"))["Alert"];
     TAside: (typeof import("tdesign-vue-next"))["Aside"];
     TBadge: (typeof import("tdesign-vue-next"))["Badge"];
     TBreadcrumb: (typeof import("tdesign-vue-next"))["Breadcrumb"];
     TBreadcrumbItem: (typeof import("tdesign-vue-next"))["BreadcrumbItem"];
     TButton: (typeof import("tdesign-vue-next"))["Button"];
+    TCard: (typeof import("tdesign-vue-next"))["Card"];
     TCheckbox: (typeof import("tdesign-vue-next"))["Checkbox"];
     TCol: (typeof import("tdesign-vue-next"))["Col"];
     TColorPicker: (typeof import("tdesign-vue-next"))["ColorPicker"];
@@ -52,6 +54,7 @@ declare module "vue" {
     TIcon: (typeof import("tdesign-vue-next"))["Icon"];
     TImage: (typeof import("tdesign-vue-next"))["Image"];
     TInput: (typeof import("tdesign-vue-next"))["Input"];
+    TInputNumber: (typeof import("tdesign-vue-next"))["InputNumber"];
     TLayout: (typeof import("tdesign-vue-next"))["Layout"];
     TLink: (typeof import("tdesign-vue-next"))["Link"];
     TMenu: (typeof import("tdesign-vue-next"))["Menu"];
@@ -59,6 +62,8 @@ declare module "vue" {
     TOption: (typeof import("tdesign-vue-next"))["Option"];
     TPopconfirm: (typeof import("tdesign-vue-next"))["Popconfirm"];
     TPopup: (typeof import("tdesign-vue-next"))["Popup"];
+    TRadio: (typeof import("tdesign-vue-next"))["Radio"];
+    TRadioGroup: (typeof import("tdesign-vue-next"))["RadioGroup"];
     TRow: (typeof import("tdesign-vue-next"))["Row"];
     TSelect: (typeof import("tdesign-vue-next"))["Select"];
     TSlider: (typeof import("tdesign-vue-next"))["Slider"];
