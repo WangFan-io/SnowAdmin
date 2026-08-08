@@ -1707,7 +1707,7 @@ export const systemMenu = [
       disable: false,
       keepAlive: false,
       affix: true,
-      link: "http://124.223.224.174:83/#/login",
+      link: "http://124.223.224.174:90/#/login",
       iframe: false,
       isFull: false,
       roles: ["admin"],
