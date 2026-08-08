@@ -1465,7 +1465,7 @@ export const systemMenu = [
       keepAlive: true,
       disable: false,
       affix: false,
-      link: "http://115.190.79.132:82/", // 链接
+      link: "http://124.223.224.174:82/", // 链接
       iframe: true, // 区分是否内链 true内链 false外链
       isFull: false,
       roles: ["admin"],
@@ -1509,7 +1509,7 @@ export const systemMenu = [
       disable: false,
       keepAlive: true,
       affix: false,
-      link: "http://115.190.79.132:81/", // 链接
+      link: "http://124.223.224.174:91/", // 链接
       iframe: false, // 区分是否内链 true内链 false外链
       isFull: false,
       roles: ["admin"],
@@ -1707,7 +1707,7 @@ export const systemMenu = [
       disable: false,
       keepAlive: false,
       affix: true,
-      link: "http://115.190.79.132:83/#/login",
+      link: "http://124.223.224.174:83/#/login",
       iframe: false,
       isFull: false,
       roles: ["admin"],

@@ -44,12 +44,12 @@ const projectInfo: any = [
   {
     label: "文档地址",
     link: true,
-    value: "http://115.190.79.132:81/"
+    value: "http://124.223.224.174:91/"
   },
   {
     label: "预览地址",
     link: true,
-    value: "http://115.190.79.132/#/login"
+    value: "http://124.223.224.174/#/login"
   }
 ];
 
