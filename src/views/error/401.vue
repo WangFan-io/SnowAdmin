@@ -1,7 +1,7 @@
 <template>
   <div class="page-404">
-    <div>
-      <s-svg-icon name="暂无权限" :size="500" />
+    <div v-if="!isMobile">
+      <s-svg-icon name="无权限" :size="500" />
     </div>
     <div class="prompt">
       <div class="title">401</div>
@@ -12,8 +12,11 @@
 </template>
 
 <script setup lang="ts">
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const { isMobile } = useDevicesSize();
 const onBack = () => {
   if (window.history.state.back !== null) {
     router.replace(window.history.state.back);

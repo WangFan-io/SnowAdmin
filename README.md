@@ -203,14 +203,14 @@ SnowAdmin
 ├─ .eslintrc-auto-import.json # ESLint 自动导入配置
 ├─ .gitignore               # 忽略 git 提交
 ├─ .prettierignore          # 忽略 Prettier 格式化
-├─ .prettierrc.cjs          # Prettier 格式化配置
+├─ prettier.config.ts         # Prettier 格式化配置
 ├─ .stylelintignore         # 忽略 Stylelint 校验
-├─ .stylelintrc.cjs         # Stylelint 格式化配置
-├─ commitlint.config.cjs    # git 提交规范配置
+├─ stylelint.config.ts         # Stylelint 格式化配置
+├─ commitlint.config.ts    # git 提交规范配置
 ├─ eslint.config.js         # Eslint 校验配置文件
 ├─ index.html               # 入口 html
 ├─ LICENSE                  # 开源协议
-├─ lint-staged.config.cjs   # lint-staged 配置文件
+├─ lint-staged.config.ts   # lint-staged 配置文件
 ├─ package.json             # 依赖包管理
 ├─ pnpm-lock.yaml           # 依赖包版本锁
 ├─ README.md                # README 介绍
