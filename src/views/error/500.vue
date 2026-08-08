@@ -1,20 +1,22 @@
 <template>
   <div class="page-404">
-    <div>
-      <s-svg-icon name="网络断开" :size="500" />
+    <div v-if="!isMobile">
+      <s-svg-icon name="广告发布失败" :size="500" />
     </div>
     <div class="prompt">
       <div class="title">500</div>
-      <div class="text">抱歉，无网络连接~</div>
+      <div class="text">抱歉，出错啦~</div>
       <a-button type="primary" v-throttle="onBack">立即返回</a-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Message } from "@arco-design/web-vue";
+import { useDevicesSize } from "@/hooks/useDevicesSize";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const { isMobile } = useDevicesSize();
 
 const onBack = () => {
   if (!navigator.onLine) {

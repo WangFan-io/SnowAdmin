@@ -1454,28 +1454,6 @@ export const systemMenu = [
     children: null
   },
   {
-    id: "140104",
-    parentId: "1401",
-    path: "/link/internal/gaodemap",
-    name: "gaodemap",
-    component: "link/internal/internal",
-    meta: {
-      title: "amap",
-      hide: false,
-      keepAlive: true,
-      disable: false,
-      affix: false,
-      link: "http://124.223.224.174:82/", // 链接
-      iframe: true, // 区分是否内链 true内链 false外链
-      isFull: false,
-      roles: ["admin"],
-      icon: "icon-menu",
-      sort: 4,
-      type: 2
-    },
-    children: null
-  },
-  {
     id: "1402",
     parentId: "14",
     path: "/link/external",
