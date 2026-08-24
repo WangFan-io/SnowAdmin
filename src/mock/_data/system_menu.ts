@@ -1553,7 +1553,7 @@ export const systemMenu = [
       disable: true,
       keepAlive: true,
       affix: false,
-      link: "https://github.com/WangFan-io/SnowAdmin", // 链接
+      link: "https://github.com/imwangfan/SnowAdmin", // 链接
       iframe: false, // 区分是否内链 true内链 false外链
       isFull: false,
       roles: ["admin"],

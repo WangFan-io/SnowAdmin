@@ -67,7 +67,7 @@ const list = reactive({
   callMe: [
     { label: "📧邮箱", value: "2547096351@qq.com", link: false },
     { label: "📠微信", value: "fanction-w", link: false },
-    { label: "🛰️github", value: "兔子先森", link: true, url: "https://github.com/WangFan-io" },
+    { label: "🛰️github", value: "兔子先森", link: true, url: "https://github.com/imwangfan/SnowAdmin" },
     { label: "📚思否", value: "兔子先森", link: true, url: "https://segmentfault.com/blog/dcodes" },
     { label: "✒️掘金", value: "兔子先森Ace", link: true, url: "https://juejin.cn/user/1728883023940600/posts" }
   ],

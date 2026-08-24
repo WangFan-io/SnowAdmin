@@ -7,7 +7,7 @@
 <script setup lang="ts">
 const currentYear = ref(new Date().getFullYear());
 const onFooter = () => {
-  window.open("https://github.com/WangFan-io/SnowAdmin", "_blank");
+  window.open("https://github.com/imwangfan/SnowAdmin.git", "_blank");
 };
 </script>
 
