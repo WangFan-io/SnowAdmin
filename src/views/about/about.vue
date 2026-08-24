@@ -39,7 +39,7 @@ const projectInfo: any = [
   {
     label: "GitHub",
     link: true,
-    value: "https://github.com/WangFan-io/SnowAdmin"
+    value: "https://github.com/imwangfan/SnowAdmin"
   },
   {
     label: "文档地址",

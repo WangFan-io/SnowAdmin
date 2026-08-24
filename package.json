@@ -5,18 +5,18 @@
   "type": "module",
   "description": "snow-admin open source management system",
   "author": {
-    "name": "WANGFan",
+    "name": "imwangfan",
     "email": "2547096351@qq.com",
-    "url": "https://github.com/WangFan-io"
+    "url": "https://github.com/imwangfan"
   },
   "license": "MIT",
-  "homepage": "https://github.com/WangFan-io/SnowAdmin",
+  "homepage": "https://github.com/imwangfan/SnowAdmin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WangFan-io/SnowAdmin.git"
+    "url": "https://github.com/imwangfan/SnowAdmin.git"
   },
   "bugs": {
-    "url": "https://github.com/WangFan-io/SnowAdmin/issues"
+    "url": "https://github.com/imwangfan/SnowAdmin/issues"
   },
   "scripts": {
     "dev": "vite",
